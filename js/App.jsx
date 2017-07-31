@@ -21,72 +21,101 @@ class App extends Component {
         console.log('ready');
 
         gapi.analytics.auth.authorize({
-          container: 'auth-button',
+          container: 'embed-api-auth-container',
           clientid: CLIENT_ID
         });
 
-        var viewSelector = new gapi.analytics.ViewSelector({
-          container: 'view-selector'
+        /**
+         * Create a new ActiveUsers instance to be rendered inside of an
+         * element with the id "active-users-container" and poll for changes every
+         * five seconds.
+         */
+        var activeUsers = new gapi.analytics.ext.ActiveUsers({
+          container: 'active-users-container',
+          pollingInterval: 5
         });
 
-        var pageViews = new gapi.analytics.googleCharts.DataChart({
-          reportType: 'ga',
-          query: {
-            'dimensions': 'ga:date',
-            'metrics': 'ga:uniquePageviews',
-            'start-date': '30daysAgo',
-            'end-date': 'yesterday',
-          },
-          chart: {
-            type: 'LINE',
-            container: 'page-views'
-          }
+        /**
+         * Add CSS animation to visually show the when users come and go.
+         */
+        activeUsers.once('success', function() {
+          var element = this.container.firstChild;
+          var timeout;
+
+          this.on('change', function(data) {
+            var element = this.container.firstChild;
+            var animationClass = data.delta > 0 ? 'is-increasing' : 'is-decreasing';
+            element.className += ' ' + animationClass;
+
+            clearTimeout(timeout);
+            timeout = setTimeout(function() {
+              element.className = element.className.replace(/ is-(increasing|decreasing)/g, '');
+            }, 3000);
+          });
         });
 
-        var activeUsers = new gapi.analytics.googleCharts.DataChart({
-          reportType: 'ga',
-          query: {
-            'dimensions': 'ga:date',
-            'metrics': 'ga:1DayUsers',
-            'start-date': '30daysAgo',
-            'end-date': 'yesterday',
-          },
-          chart: {
-            type: 'LINE',
-            container: 'active-users'
-          }
+        /**
+         * Create a new ViewSelector2 instance to be rendered inside of an
+         * element with the id "view-selector-container".
+         */
+        var viewSelector = new gapi.analytics.ext.ViewSelector2({
+          container: 'view-selector-container'
+        }).execute();
+
+        /**
+         * Update the activeUsers component, the Chartjs charts, and the dashboard
+         * title whenever the user changes the view.
+         */
+        viewSelector.on('viewChange', function(data) {
+          var title = document.getElementById('view-name');
+          title.textContent = data.property.name + ' (' + data.view.name + ')';
+
+          // Start tracking active users for this view.
+          activeUsers.set(data).execute();
+          displayData(data.ids);
         });
 
-        var registeredUsers = new gapi.analytics.googleCharts.DataChart({
-          reportType: 'ga',
-          query: {
-            'dimensions': 'ga:date',
-            'metrics': 'ga:goal3Completions',
-            'start-date': '30daysAgo',
-            'end-date': 'yesterday',
-          },
-          chart: {
-            type: 'LINE',
-            container: 'registered-users'
-          }
-        });
+        /**
+         * Make api call and display results
+         */
+        function displayData(ids) {
+          query({
+            ids: ids,
+            dimensions: 'ga:browser',
+            metrics: 'ga:pageviews',
+            sort: '-ga:pageviews',
+            'max-results': 5
+          }).then(function(response) {
+            var data = [];
+            var colors = ['#4D5360', '#949FB1', '#D4CCC5', '#E2EAE9', '#F7464A'];
 
-        // Step 6: Hook up the components to work together.
+            response.rows.forEach(function(row, i) {
+              data.push({ value: +row[1], color: colors[i], label: row[0] });
+            });
 
-        gapi.analytics.auth.on('success', function(response) {
-          viewSelector.execute();
-        });
+            console.log(data);
+          });
+        }
 
-        viewSelector.on('change', function(ids) {
-          var newIds = {
-            query: {
-              ids: ids
-            }
-          }
-          pageViews.set(newIds).execute();
-          activeUsers.set(newIds).execute();
-          registeredUsers.set(newIds).execute();
-        });
+        /**
+         * Extend the Embed APIs `gapi.analytics.report.Data` component to
+         * return a promise the is fulfilled with the value returned by the API.
+         * @param {Object} params The request parameters.
+         * @return {Promise} A promise.
+         */
+        function query(params) {
+          return new Promise(function(resolve, reject) {
+            var data = new gapi.analytics.report.Data({ query: params });
+            data
+              .once('success', function(response) {
+                resolve(response);
+              })
+              .once('error', function(response) {
+                reject(response);
+              })
+              .execute();
+          });
+        }
       });
     });
   }
