@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<title>Dashboard</title>
+	<meta name="description" content="shuttout dashboard data visualization">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="google-signin-client_id" content="1071518246281-2peqeloqqtr11hq6t5jk79eheue5ba82.apps.googleusercontent.com">
+	<meta name="google-signin-scope" content="https://www.googleapis.com/auth/analytics.readonly">
+
+	<link rel="apple-touch-icon" href="apple-touch-icon.png">
+	<!-- Place favicon.ico in the root directory -->
+
+	<link rel="stylesheet" href="/public/css/chartjs-visualizations.css">
+	<link rel="stylesheet" href="/public/css/style.css">
+
+    <script>
+      (function(w,d,s,g,js,fs){
+        g=w.gapi||(w.gapi={});g.analytics={q:[],ready:function(f){this.q.push(f);}};
+        js=d.createElement(s);fs=d.getElementsByTagName(s)[0];
+        js.src='https://apis.google.com/js/platform.js';
+        fs.parentNode.insertBefore(js,fs);js.onload=function(){g.load('analytics');};
+      }(window,document,'script'));
+    </script>
+
+	<!-- Include the ViewSelector2 component script. -->
+	<script src="/public/javascript/embed-api/components/view-selector2.js"></script>
+
+	<!-- Include the DateRangeSelector component script. -->
+	<script src="/public/javascript/embed-api/components/date-range-selector.js"></script>
+
+	<!-- Include the ActiveUsers component script. -->
+	<script src="/public/javascript/embed-api/components/active-users.js"></script>
+</head>
+<body>
+
+	<header>
+		<section id="auth-button"></section>
+		<section id="view-selector"></section>
+		<section id="timeline"></section>
+		<section id="page-views"></section>
+		<section id="active-users"></section>
+		<section id="registered-users"></section>
+		<div id="active-users-container"></div>
+	</header>
+
+	<div class="Chartjs">
+		<h3>Top Browsers (by pageview)</h3>
+		<figure class="Chartjs-figure" id="chart-3-container"></figure>
+		<ol class="Chartjs-legend" id="legend-3-container"></ol>
+	</div>
+
+	<div id="app"></div>
+
+	<script src="/public/bundle.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,23 @@
+{
+  "plugins": [
+    ["emotion/babel", { inline: true }],
+    "babel-plugin-transform-class-properties"
+  ],
+	"presets": [
+		"react",
+		["env", {
+			"targets": {
+				"browsers": "last 2 versions"
+			},
+			"loose": true,
+			"modules": false
+		}]
+	],
+  "env": {
+    "test": {
+      "plugins": [
+        "babel-plugin-transform-es2015-modules-commonjs"
+      ]
+    }
+  }
+}
