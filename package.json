@@ -18,6 +18,7 @@
     "cors": "2.8.3",
     "emotion": "^6.0.3",
     "express": "4.15.3",
+    "file-loader": "^0.11.2",
     "google-client-api": "^1.0.4",
     "lodash": "4.17.4",
     "moment": "^2.18.1",
@@ -27,6 +28,9 @@
     "react-chartjs-2": "^2.5.5",
     "react-dom": "next",
     "react-router-dom": "4.1.1",
+    "semantic-ui-css": "^2.2.11",
+    "semantic-ui-react": "^0.71.3",
+    "url-loader": "^0.5.9",
     "webpack": "2.6.1",
     "webpack-dev-middleware": "1.10.2",
     "webpack-hot-middleware": "2.18.0"
