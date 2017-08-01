@@ -416,7 +416,11 @@ class App extends Component {
               displayTitle
             />
             <Divider />
-            <AdditionalStats exitRate={this.state.exitRate} bounceRate={this.state.bounceRate} uniquePageviews={this.state.uniquePageviews}/>
+            <AdditionalStats
+              exitRate={this.state.exitRate}
+              bounceRate={this.state.bounceRate}
+              uniquePageviews={this.state.uniquePageviews}
+            />
           </Container>
         </div>
       );
