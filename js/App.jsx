@@ -8,6 +8,7 @@ import NewUsersChart from './NewUsersChart';
 import RegisteredUsersChart from './RegisteredUsersChart';
 import LoginPanel from './LoginPanel';
 import BaseStats from './BaseStats';
+import AdditionalStats from './AdditionalStats';
 import TopMenu from './TopMenu';
 
 class App extends Component {
@@ -21,7 +22,10 @@ class App extends Component {
     activeUsersMonthly: [],
     userDevice: [],
     newUsers: [],
-    registeredUsers: []
+    registeredUsers: [],
+    exitRate: 0,
+    bounceRate: 0,
+    uniquePageviews: 0
   };
 
   componentDidMount() {
@@ -244,7 +248,9 @@ class App extends Component {
               {
                 label: 'New users visits',
                 data: [],
-                backgroundColor: `rgba(54, 162, 235, 0.6)`
+                backgroundColor: `transparent`,
+                borderColor: 'rgba(54, 162, 235, 0.95)',
+                borderWidth: 2
               }
             ]
           };
@@ -276,26 +282,83 @@ class App extends Component {
               {
                 label: 'Registered Users',
                 data: [],
-                backgroundColor: 'rgba(255, 99, 132, 0.4)',
-                borderWidth: 2,
+                backgroundColor: 'rgba(255, 99, 132, 0.3)',
+                borderWidth: 1,
                 borderColor: 'rgba(255, 99, 132, 0.95)'
               }
             ]
           };
 
           const months = [
-            'January', 'February', 'March', 'April', 'May',
-            'June', 'July', 'August', 'September',
-            'October', 'November', 'December'
+            'January',
+            'February',
+            'March',
+            'April',
+            'May',
+            'June',
+            'July',
+            'August',
+            'September',
+            'October',
+            'November',
+            'December'
           ];
 
-          response.rows.forEach((row) => {
+          response.rows.forEach(row => {
             registeredUsersData.datasets[0].data.push(+row[1]);
             registeredUsersData.labels.push(months[parseInt(row[0], 10) - 1]);
           });
 
           component.setState({
             registeredUsers: registeredUsersData
+          });
+        });
+      }
+
+      function exitRate(ids) {
+        // Adjust `now` to experiment with different days, for testing only...
+        const now = moment(); // .subtract(3, 'day');
+
+        query({
+          ids,
+          metrics: 'ga:exitRate',
+          'start-date': moment(now).subtract(1, 'day').format('YYYY-MM-DD'),
+          'end-date': moment(now).format('YYYY-MM-DD')
+        }).then(response => {
+          component.setState({
+            exitRate: response.rows[0]
+          });
+        });
+      }
+
+      function bounceRate(ids) {
+        // Adjust `now` to experiment with different days, for testing only...
+        const now = moment(); // .subtract(3, 'day');
+
+        query({
+          ids,
+          metrics: 'ga:bounceRate',
+          'start-date': moment(now).subtract(1, 'day').format('YYYY-MM-DD'),
+          'end-date': moment(now).format('YYYY-MM-DD')
+        }).then(response => {
+          component.setState({
+            bounceRate: response.rows[0]
+          });
+        });
+      }
+
+      function uniquePageviews(ids) {
+        // Adjust `now` to experiment with different days, for testing only...
+        const now = moment(); // .subtract(3, 'day');
+
+        query({
+          ids,
+          metrics: 'ga:uniquePageviews',
+          'start-date': moment(now).subtract(3, 'year').format('YYYY-MM-DD'),
+          'end-date': moment(now).format('YYYY-MM-DD')
+        }).then(response => {
+          component.setState({
+            uniquePageviews: response.rows[0]
           });
         });
       }
@@ -314,6 +377,9 @@ class App extends Component {
         userDevice(data.ids);
         newUsers(data.ids);
         registeredUsers(data.ids);
+        exitRate(data.ids);
+        bounceRate(data.ids);
+        uniquePageviews(data.ids);
       });
     });
   }
@@ -323,25 +389,9 @@ class App extends Component {
       return (
         <div>
           <TopMenu />
-          <Container text style={{ marginTop: '7em' }}>
+          <Container text style={{ marginTop: '5em' }}>
             <LoginPanel />
             <BaseStats pageViewsMonth={this.state.pageViewsMonth} pageViewsDay={this.state.pageViewsDay} />
-            <Divider />
-            <Chart
-              browserData={this.state.chartData.browsers}
-              legendPosition="bottom"
-              displayLegend={false}
-              displayTitle
-            />
-            <Divider />
-            <DeviceChart userDeviceData={this.state.userDevice} legendPosition="bottom" displayLegend displayTitle />
-            <Divider />
-            <NewUsersChart
-              newUsersData={this.state.newUsers}
-              legendPosition="bottom"
-              displayLegend={false}
-              displayTitle
-            />
             <Divider />
             <RegisteredUsersChart
               registeredUsersData={this.state.registeredUsers}
@@ -350,6 +400,23 @@ class App extends Component {
               displayTitle
             />
             <Divider />
+            <NewUsersChart
+              newUsersData={this.state.newUsers}
+              legendPosition="bottom"
+              displayLegend={false}
+              displayTitle
+            />
+            <Divider />
+            <DeviceChart userDeviceData={this.state.userDevice} legendPosition="bottom" displayLegend displayTitle />
+            <Divider />
+            <Chart
+              browserData={this.state.chartData.browsers}
+              legendPosition="bottom"
+              displayLegend={false}
+              displayTitle
+            />
+            <Divider />
+            <AdditionalStats exitRate={this.state.exitRate} bounceRate={this.state.bounceRate} uniquePageviews={this.state.uniquePageviews}/>
           </Container>
         </div>
       );

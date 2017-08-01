@@ -1,9 +1,9 @@
 import React from 'react';
-import { Bar } from 'react-chartjs-2';
+import { HorizontalBar } from 'react-chartjs-2';
 
 const RegisteredUsersChart = props =>
   <div>
-    <Bar
+    <HorizontalBar
       data={props.registeredUsersData}
       width={100}
       height={50}
