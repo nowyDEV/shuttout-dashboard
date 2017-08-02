@@ -1,4 +1,5 @@
 import React from 'react';
+import { shape, array, bool, string} from 'prop-types';
 import { Doughnut } from 'react-chartjs-2';
 
 const DeviceChart = props =>
@@ -20,5 +21,15 @@ const DeviceChart = props =>
       }}
     />
   </div>;
+
+DeviceChart.propTypes = {
+  userDeviceData: shape({
+    datasets: array.isRequired,
+    labels: array.isRequired
+  }).isRequired,
+  displayTitle: bool.isRequired,
+  displayLegend: bool.isRequired,
+  legendPosition: string.isRequired
+}
 
 export default DeviceChart;

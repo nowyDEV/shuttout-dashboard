@@ -1,4 +1,5 @@
 import React from 'react';
+import { shape, array, bool, string} from 'prop-types';
 import { HorizontalBar } from 'react-chartjs-2';
 
 const RegisteredUsersChart = props =>
@@ -20,5 +21,15 @@ const RegisteredUsersChart = props =>
       }}
     />
   </div>;
+
+RegisteredUsersChart.propTypes = {
+  registeredUsersData: shape({
+    datasets: array.isRequired,
+    labels: array.isRequired
+  }).isRequired,
+  displayTitle: bool.isRequired,
+  displayLegend: bool.isRequired,
+  legendPosition: string.isRequired
+};
 
 export default RegisteredUsersChart;
