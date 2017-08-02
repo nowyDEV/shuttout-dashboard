@@ -184,7 +184,7 @@ class App extends Component {
             labels: [],
             datasets: [
               {
-                label: 'New users visits',
+                label: 'New user visits',
                 data: [],
                 backgroundColor: `transparent`,
                 borderColor: 'rgba(54, 162, 235, 0.95)',

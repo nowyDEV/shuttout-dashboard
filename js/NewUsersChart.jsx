@@ -11,7 +11,7 @@ const NewUsersChart = props =>
       options={{
         title: {
           display: props.displayTitle,
-          text: 'New Users visits per day'
+          text: 'New User visits per day'
         },
         legend: {
           display: props.displayLegend,
