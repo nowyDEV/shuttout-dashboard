@@ -11,33 +11,22 @@
 	<!-- Place favicon.ico in the root directory -->
 
 	<link rel="stylesheet" href="./public/css/chartjs-visualizations.css">
-	<link rel="stylesheet" href="./public/css/google.css">
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.11/semantic.min.css">
 	<link rel="stylesheet" href="./public/css/style.css">
 
-    <script>
+</head>
+<body>
+	<div id="embed-api-auth-container"></div>
+	<div id="app"></div>
+
+	<script>
       (function(w,d,s,g,js,fs){
         g=w.gapi||(w.gapi={});g.analytics={q:[],ready:function(f){this.q.push(f);}};
         js=d.createElement(s);fs=d.getElementsByTagName(s)[0];
         js.src='https://apis.google.com/js/platform.js';
         fs.parentNode.insertBefore(js,fs);js.onload=function(){g.load('analytics');};
       }(window,document,'script'));
-    </script>
-
-	<script src="https://apis.google.com/js/client.js?onload=authorize"></script>
-
-	<!-- Include the ViewSelector2 component script. -->
-	<script src="./public/javascript/embed-api/components/view-selector2.js"></script>
-
-	<!-- Include the DateRangeSelector component script. -->
-	<script src="./public/javascript/embed-api/components/date-range-selector.js"></script>
-
-	<!-- Include the ActiveUsers component script. -->
-	<script src="./public/javascript/embed-api/components/active-users.js"></script>
-</head>
-<body>
-	<div id="embed-api-auth-container"></div>
-	<div id="app"></div>
+	</script>
 	<script src="public/bundle.js"></script>
 </body>
 </html>

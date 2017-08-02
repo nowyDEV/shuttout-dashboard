@@ -6,7 +6,6 @@ import BrowserChart from './BrowserChart';
 import DeviceChart from './DeviceChart';
 import NewUsersChart from './NewUsersChart';
 import RegisteredUsersChart from './RegisteredUsersChart';
-import LoginPanel from './LoginPanel';
 import BaseStats from './BaseStats';
 import AdditionalStats from './AdditionalStats';
 import TopMenu from './TopMenu';
@@ -283,7 +282,6 @@ class App extends Component {
         <div>
           <TopMenu />
           <Container text style={{ marginTop: '5em' }}>
-            <LoginPanel />
             <BaseStats pageViewsMonth={parseInt(this.state.data.pageViewsMonth, 10)} pageViewsDay={parseInt(this.state.data.pageViewsDay, 10)} />
             <Divider />
             <RegisteredUsersChart
