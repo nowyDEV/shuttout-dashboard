@@ -3,14 +3,9 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import moment from 'moment';
-import { Loader, Container, Divider, Header } from 'semantic-ui-react';
-import BrowserChart from './BrowserChart';
-import DeviceChart from './DeviceChart';
-import NewUsersChart from './NewUsersChart';
-import RegisteredUsersChart from './RegisteredUsersChart';
-import BaseStats from './BaseStats';
-import AdditionalStats from './AdditionalStats';
+import { Header, Loader } from 'semantic-ui-react';
 import TopMenu from './TopMenu';
+import DisplayPanel from './DisplayPanel';
 
 class App extends Component {
   state = {
@@ -54,15 +49,15 @@ class App extends Component {
     const responseData = {
       apiLoaded: false,
       browsers: {},
-      pageViewsMonth: 0,
-      pageViewsDay: 0,
+      pageViewsMonth: '',
+      pageViewsDay: '',
       activeUsersMonthly: [],
       userDevice: {},
       newUsers: {},
       registeredUsers: {},
-      exitRate: 0,
-      bounceRate: 0,
-      uniquePageviews: 0
+      exitRate: '',
+      bounceRate: '',
+      uniquePageviews: ''
     };
     const now = moment();
 
@@ -290,46 +285,7 @@ class App extends Component {
       return (
         <div>
           <TopMenu />
-          <Container text style={{ marginTop: '5em' }}>
-            <BaseStats
-              pageViewsMonth={parseInt(this.state.data.pageViewsMonth, 10)}
-              pageViewsDay={parseInt(this.state.data.pageViewsDay, 10)}
-            />
-            <Divider />
-            <RegisteredUsersChart
-              registeredUsersData={this.state.data.registeredUsers}
-              legendPosition="bottom"
-              displayLegend={false}
-              displayTitle
-            />
-            <Divider />
-            <NewUsersChart
-              newUsersData={this.state.data.newUsers}
-              legendPosition="bottom"
-              displayLegend={false}
-              displayTitle
-            />
-            <Divider />
-            <DeviceChart
-              userDeviceData={this.state.data.userDevice}
-              legendPosition="bottom"
-              displayLegend
-              displayTitle
-            />
-            <Divider />
-            <BrowserChart
-              browserData={this.state.data.browsers}
-              legendPosition="bottom"
-              displayLegend={false}
-              displayTitle
-            />
-            <Divider />
-            <AdditionalStats
-              exitRate={parseFloat(this.state.data.exitRate).toFixed(2)}
-              bounceRate={parseFloat(this.state.data.bounceRate).toFixed(2)}
-              uniquePageviews={parseInt(this.state.data.uniquePageviews, 10)}
-            />
-          </Container>
+          <DisplayPanel data={this.state.data} />
         </div>
       );
     }

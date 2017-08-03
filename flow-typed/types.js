@@ -1,3 +1,16 @@
+export type Data = {
+  browsers: ChartjsData,
+  pageViewsMonth: string,
+  pageViewsDay: string,
+  activeUsersMonthly: array,
+  userDevice: ChartjsData,
+  newUsers: ChartjsData,
+  registeredUsers: ChartjsData,
+  exitRate: string,
+  bounceRate: string,
+  uniquePageviews: string
+}
+
 export type ChartjsData = {
   datasets: array<ChartjsDatasets>,
   labels: array<string>
@@ -5,12 +18,6 @@ export type ChartjsData = {
 
 export type ChartjsDatasets = {
   backgroundColor: array<string>,
-  data: array<number>
-}
-
-export type ChartjsOptions = {
-  displayTitle: boolean,
-  displayLegend: boolean,
-  legendPosition: string
+  data: array<string>
 }
 
