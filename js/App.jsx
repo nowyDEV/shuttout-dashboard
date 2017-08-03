@@ -91,7 +91,7 @@ class App extends Component {
         'max-results': 5
       }) // Browser popularity
         .then(response => {
-          const browsersData = {
+          responseData.browsers = {
             labels: [],
             datasets: [
               {
@@ -110,11 +110,10 @@ class App extends Component {
           ];
 
           response.rows.forEach((row, i) => {
-            browsersData.datasets[0].data.push(+row[1]);
-            browsersData.datasets[0].backgroundColor.push(colors[i]);
-            browsersData.labels.push(row[0]);
+            responseData.browsers.datasets[0].data.push(+row[1]);
+            responseData.browsers.datasets[0].backgroundColor.push(colors[i]);
+            responseData.browsers.labels.push(row[0]);
           });
-          responseData.browsers = browsersData;
         }),
       apiQuery({
         ids: TABLE_ID,
@@ -157,7 +156,7 @@ class App extends Component {
         'end-date': moment(now).subtract(1, 'day').format('YYYY-MM-DD')
       }) // Device Popularity
         .then(response => {
-          const userDeviceData = {
+          responseData.userDevice = {
             labels: [],
             datasets: [
               {
@@ -170,11 +169,10 @@ class App extends Component {
           const colors = ['rgba(255, 99, 132, 0.6)', 'rgba(54, 162, 235, 0.6)', 'rgba(255, 206, 86, 0.6)'];
 
           response.rows.forEach((row, i) => {
-            userDeviceData.datasets[0].data.push(+row[1]);
-            userDeviceData.datasets[0].backgroundColor.push(colors[i]);
-            userDeviceData.labels.push(row[0]);
+            responseData.userDevice.datasets[0].data.push(+row[1]);
+            responseData.userDevice.datasets[0].backgroundColor.push(colors[i]);
+            responseData.userDevice.labels.push(row[0]);
           });
-          responseData.userDevice = userDeviceData;
         }),
       apiQuery({
         ids: TABLE_ID,
@@ -184,7 +182,7 @@ class App extends Component {
         'end-date': moment(now).subtract(1, 'day').format('YYYY-MM-DD')
       }) // New Users Monthly ( Daily info )
         .then(response => {
-          const newUsersData = {
+          responseData.newUsers = {
             labels: [],
             datasets: [
               {
@@ -198,10 +196,9 @@ class App extends Component {
           };
 
           response.rows.forEach(row => {
-            newUsersData.datasets[0].data.push(+row[1]);
-            newUsersData.labels.push(`day ${row[0]}`);
+            responseData.newUsers.datasets[0].data.push(+row[1]);
+            responseData.newUsers.labels.push(`day ${row[0]}`);
           });
-          responseData.newUsers = newUsersData;
         }),
       apiQuery({
         ids: TABLE_ID,
@@ -211,7 +208,7 @@ class App extends Component {
         'end-date': moment(now).subtract(1, 'day').format('YYYY-MM-DD')
       }) // Registrations Per Month
         .then(response => {
-          const registeredUsersData = {
+          responseData.registeredUsers = {
             labels: [],
             datasets: [
               {
@@ -240,10 +237,9 @@ class App extends Component {
           ];
 
           response.rows.forEach(row => {
-            registeredUsersData.datasets[0].data.push(+row[1]);
-            registeredUsersData.labels.push(months[parseInt(row[0], 10) - 1]);
+            responseData.registeredUsers.datasets[0].data.push(+row[1]);
+            responseData.registeredUsers.labels.push(months[parseInt(row[0], 10) - 1]);
           });
-          responseData.registeredUsers = registeredUsersData;
         }),
       apiQuery({
         ids: TABLE_ID,
