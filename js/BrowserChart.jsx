@@ -1,8 +1,14 @@
+// @flow
+
 import React from 'react';
-import { shape, array, bool, string } from 'prop-types';
 import { Bar } from 'react-chartjs-2';
 
-const BrowserChart = props =>
+const BrowserChart = (props: {
+  browserData: ChartjsData,
+  displayTitle: boolean,
+  displayLegend: boolean,
+  legendPosition: string
+}) =>
   <div>
     <Bar
       data={props.browserData}
@@ -11,7 +17,7 @@ const BrowserChart = props =>
       options={{
         title: {
           display: props.displayTitle,
-          text: 'Browsers popularity'
+          text: 'Browser popularity'
         },
         legend: {
           display: props.displayLegend,
@@ -21,15 +27,5 @@ const BrowserChart = props =>
       }}
     />
   </div>;
-
-BrowserChart.propTypes = {
-  browserData: shape({
-    datasets: array.isRequired,
-    labels: array.isRequired
-  }).isRequired,
-  displayTitle: bool.isRequired,
-  displayLegend: bool.isRequired,
-  legendPosition: string.isRequired
-};
 
 export default BrowserChart;

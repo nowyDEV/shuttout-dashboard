@@ -1,3 +1,5 @@
+// @flow
+
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import moment from 'moment';
@@ -24,6 +26,7 @@ class App extends Component {
     const CLIENT_ID = '1071518246281-2peqeloqqtr11hq6t5jk79eheue5ba82.apps.googleusercontent.com';
 
     /* global gapi */
+    // $FlowFixMe
     gapi.analytics.ready(() => {
       gapi.analytics.auth.authorize({
         container: 'embed-api-auth-container',
@@ -32,7 +35,12 @@ class App extends Component {
       });
 
       gapi.analytics.auth.on('signIn', () => {
-        document.getElementById('embed-api-auth-container').innerHTML = '';
+        const authButton = document.getElementById('embed-api-auth-container');
+
+        if (authButton) {
+          authButton.innerHTML = '';
+        }
+
         this.apiCall();
       });
     });
@@ -49,9 +57,9 @@ class App extends Component {
       pageViewsMonth: 0,
       pageViewsDay: 0,
       activeUsersMonthly: [],
-      userDevice: [],
-      newUsers: [],
-      registeredUsers: [],
+      userDevice: {},
+      newUsers: {},
+      registeredUsers: {},
       exitRate: 0,
       bounceRate: 0,
       uniquePageviews: 0
@@ -66,6 +74,7 @@ class App extends Component {
      */
     function apiQuery(params) {
       return new Promise((resolve, reject) => {
+        // $FlowFixMe
         const data = new gapi.analytics.report.Data({ query: params });
         data
           .once('success', response => {
@@ -91,7 +100,7 @@ class App extends Component {
             labels: [],
             datasets: [
               {
-                label: 'Browsers popularity',
+                label: 'Browser popularity',
                 data: [],
                 backgroundColor: []
               }
@@ -282,7 +291,10 @@ class App extends Component {
         <div>
           <TopMenu />
           <Container text style={{ marginTop: '5em' }}>
-            <BaseStats pageViewsMonth={parseInt(this.state.data.pageViewsMonth, 10)} pageViewsDay={parseInt(this.state.data.pageViewsDay, 10)} />
+            <BaseStats
+              pageViewsMonth={parseInt(this.state.data.pageViewsMonth, 10)}
+              pageViewsDay={parseInt(this.state.data.pageViewsDay, 10)}
+            />
             <Divider />
             <RegisteredUsersChart
               registeredUsersData={this.state.data.registeredUsers}
@@ -305,7 +317,12 @@ class App extends Component {
               displayTitle
             />
             <Divider />
-            <BrowserChart browserData={this.state.data.browsers} legendPosition="bottom" displayLegend={false} displayTitle />
+            <BrowserChart
+              browserData={this.state.data.browsers}
+              legendPosition="bottom"
+              displayLegend={false}
+              displayTitle
+            />
             <Divider />
             <AdditionalStats
               exitRate={parseFloat(this.state.data.exitRate).toFixed(2)}
@@ -318,7 +335,7 @@ class App extends Component {
     }
     return (
       <Header as="h2" textAlign="center" style={{ marginTop: '7em' }}>
-        <Header.Content style={{ marginBottom: '1em' }}>Loading api...</Header.Content>
+        <Header.Content style={{ marginBottom: '1em' }}>Loading data...</Header.Content>
         <Loader active inline="centered" />
       </Header>
     );

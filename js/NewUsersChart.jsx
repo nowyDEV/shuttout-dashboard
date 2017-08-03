@@ -1,8 +1,14 @@
+// @flow
+
 import React from 'react';
-import { shape, array, bool, string} from 'prop-types';
 import { Line } from 'react-chartjs-2';
 
-const NewUsersChart = props =>
+const NewUsersChart = (props: {
+  newUsersData: ChartjsData,
+  displayTitle: boolean,
+  displayLegend: boolean,
+  legendPosition: string
+}) =>
   <div>
     <Line
       data={props.newUsersData}
@@ -21,15 +27,5 @@ const NewUsersChart = props =>
       }}
     />
   </div>;
-
-NewUsersChart.propTypes = {
-  newUsersData: shape({
-    datasets: array.isRequired,
-    labels: array.isRequired
-  }).isRequired,
-  displayTitle: bool.isRequired,
-  displayLegend: bool.isRequired,
-  legendPosition: string.isRequired
-};
 
 export default NewUsersChart;
