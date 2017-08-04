@@ -26,6 +26,7 @@
     "emotion": "^6.0.3",
     "express": "4.15.3",
     "file-loader": "^0.11.2",
+    "google-client-api": "^1.0.4",
     "lodash": "4.17.4",
     "moment": "^2.18.1",
     "prop-types": "15.5.10",
