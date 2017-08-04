@@ -2,8 +2,21 @@
 
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import moment from 'moment';
 import { Header, Loader } from 'semantic-ui-react';
+
+import { CLIENT_ID } from './config/api_credentials';
+
+import browsersQuery from './gapi_calls/browsers';
+import devicesQuery from './gapi_calls/devices'
+import newUsersDay from './gapi_calls/new_users_day'
+import newUsersMonth from './gapi_calls/new_users_month';
+import newUsersMonthDay from './gapi_calls/new_users_month_day'
+import activeUsersMonth from './gapi_calls/active_users_month'
+import registrationsQuery from './gapi_calls/registrations'
+import totalPageviews from './gapi_calls/total_pageviews'
+import bounceRate from './gapi_calls/bounce_rate'
+import exitRate from './gapi_calls/exit_rate'
+
 import TopMenu from './TopMenu';
 import DisplayPanel from './DisplayPanel';
 
@@ -18,8 +31,6 @@ class App extends Component {
   }
 
   apiInit() {
-    const CLIENT_ID = '1071518246281-2peqeloqqtr11hq6t5jk79eheue5ba82.apps.googleusercontent.com';
-
     /* global gapi */
     // $FlowFixMe
     gapi.analytics.ready(() => {
@@ -45,7 +56,6 @@ class App extends Component {
     /**
      * Make api call and update state
      */
-    const TABLE_ID = 'ga:101878164';
     const responseData = {
       apiLoaded: false,
       browsers: {},
@@ -59,37 +69,9 @@ class App extends Component {
       bounceRate: '',
       uniquePageviews: ''
     };
-    const now = moment();
-
-    /**
-     * Extend the Embed APIs `gapi.analytics.report.Data` component to
-     * return a promise the is fulfilled with the value returned by the API.
-     * @param {Object} params The request parameters.
-     * @return {Promise} A promise.
-     */
-    function apiQuery(params) {
-      return new Promise((resolve, reject) => {
-        // $FlowFixMe
-        const data = new gapi.analytics.report.Data({ query: params });
-        data
-          .once('success', response => {
-            resolve(response);
-          })
-          .once('error', response => {
-            reject(response);
-          })
-          .execute();
-      });
-    }
 
     Promise.all([
-      apiQuery({
-        ids: TABLE_ID,
-        dimensions: 'ga:browser',
-        metrics: 'ga:pageviews',
-        sort: '-ga:pageviews',
-        'max-results': 5
-      }) // Browser popularity
+      browsersQuery
         .then(response => {
           responseData.browsers = {
             labels: [],
@@ -115,46 +97,21 @@ class App extends Component {
             responseData.browsers.labels.push(row[0]);
           });
         }),
-      apiQuery({
-        ids: TABLE_ID,
-        metrics: 'ga:newUsers',
-        'start-date': moment(now).subtract(1, 'day').subtract(1, 'month').format('YYYY-MM-DD'),
-        'end-date': moment(now).subtract(1, 'day').format('YYYY-MM-DD')
-      }) // New Users Last Month
+      newUsersMonth
         .then(response => {
           responseData.pageViewsMonth = response.rows[0];
         }),
-      apiQuery({
-        ids: TABLE_ID,
-        metrics: 'ga:newUsers',
-        'start-date': moment(now).subtract(1, 'day').format('YYYY-MM-DD'),
-        'end-date': moment(now).format('YYYY-MM-DD')
-      }) // New Users Last Day
+      newUsersDay
         .then(response => {
           responseData.pageViewsDay = response.rows[0];
         }),
-      apiQuery({
-        ids: TABLE_ID,
-        metrics: 'ga:30dayUsers',
-        dimensions: 'ga:date',
-        'max-results': 5,
-        sort: '-ga:date',
-        'start-date': moment(now).subtract(1, 'day').subtract(1, 'month').format('YYYY-MM-DD'),
-        'end-date': moment(now).subtract(1, 'day').format('YYYY-MM-DD')
-      }) // Active Users Monthly
+      activeUsersMonth
         .then(response => {
           response.rows.forEach(row => {
             responseData.activeUsersMonthly.push({ date: row[0], amount: row[1] });
           });
         }),
-      apiQuery({
-        ids: TABLE_ID,
-        metrics: 'ga:users',
-        dimensions: 'ga:deviceCategory',
-        sort: 'ga:deviceCategory',
-        'start-date': moment(now).subtract(1, 'day').subtract(1, 'month').format('YYYY-MM-DD'),
-        'end-date': moment(now).subtract(1, 'day').format('YYYY-MM-DD')
-      }) // Device Popularity
+      devicesQuery
         .then(response => {
           responseData.userDevice = {
             labels: [],
@@ -174,13 +131,7 @@ class App extends Component {
             responseData.userDevice.labels.push(row[0]);
           });
         }),
-      apiQuery({
-        ids: TABLE_ID,
-        metrics: 'ga:newUsers',
-        dimensions: 'ga:day',
-        'start-date': moment(now).subtract(1, 'day').subtract(1, 'month').format('YYYY-MM-DD'),
-        'end-date': moment(now).subtract(1, 'day').format('YYYY-MM-DD')
-      }) // New Users Monthly ( Daily info )
+      newUsersMonthDay
         .then(response => {
           responseData.newUsers = {
             labels: [],
@@ -200,13 +151,7 @@ class App extends Component {
             responseData.newUsers.labels.push(`day ${row[0]}`);
           });
         }),
-      apiQuery({
-        ids: TABLE_ID,
-        metrics: 'ga:goal3Completions',
-        dimensions: 'ga:month',
-        'start-date': moment(now).subtract(1, 'day').subtract(6, 'month').format('YYYY-MM-DD'),
-        'end-date': moment(now).subtract(1, 'day').format('YYYY-MM-DD')
-      }) // Registrations Per Month
+      registrationsQuery
         .then(response => {
           responseData.registeredUsers = {
             labels: [],
@@ -241,30 +186,15 @@ class App extends Component {
             responseData.registeredUsers.labels.push(months[parseInt(row[0], 10) - 1]);
           });
         }),
-      apiQuery({
-        ids: TABLE_ID,
-        metrics: 'ga:exitRate',
-        'start-date': moment(now).subtract(1, 'day').format('YYYY-MM-DD'),
-        'end-date': moment(now).format('YYYY-MM-DD')
-      }) // Exit Rate
+      exitRate
         .then(response => {
           responseData.exitRate = response.rows[0];
         }),
-      apiQuery({
-        ids: TABLE_ID,
-        metrics: 'ga:bounceRate',
-        'start-date': moment(now).subtract(1, 'day').format('YYYY-MM-DD'),
-        'end-date': moment(now).format('YYYY-MM-DD')
-      }) // Bounce Rate
+      bounceRate
         .then(response => {
           responseData.bounceRate = response.rows[0];
         }),
-      apiQuery({
-        ids: TABLE_ID,
-        metrics: 'ga:uniquePageviews',
-        'start-date': moment(now).subtract(3, 'year').format('YYYY-MM-DD'),
-        'end-date': moment(now).format('YYYY-MM-DD')
-      }) // Total Pageviews
+      totalPageviews
         .then(response => {
           responseData.uniquePageviews = response.rows[0];
         })
