@@ -1,4 +1,4 @@
-export type Data = {
+export type gapiData = {
   browsers: ChartjsData,
   pageViewsMonth: string,
   pageViewsDay: string,

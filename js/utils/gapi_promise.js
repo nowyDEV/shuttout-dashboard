@@ -15,18 +15,18 @@ function apiQuery(params: {
   'end-date'?: string
 }) {
   return new Promise((resolve, reject) => {
-      /* global gapi */
-      // $FlowFixMe
-      const data = new gapi.analytics.report.Data({ query: params });
-      data
-        .once('success', response => {
-          resolve(response);
-        })
-        .once('error', response => {
-          reject(response);
-        })
-        .execute();
-    });
+    /* global gapi */
+    // $FlowFixMe
+    const data = new gapi.analytics.report.Data({ query: params });
+    data
+      .once('success', response => {
+        resolve(response);
+      })
+      .once('error', response => {
+        reject(response);
+      })
+      .execute();
+  });
 }
 
 export default apiQuery;

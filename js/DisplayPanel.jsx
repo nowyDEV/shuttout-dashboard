@@ -9,8 +9,9 @@ import RegisteredUsersChart from './RegisteredUsersChart';
 import BaseStats from './BaseStats';
 import AdditionalStats from './AdditionalStats';
 
-const DisplayPanel = (props: { data: Data }) =>
+const DisplayPanel = (props: { data: gapiData }) =>
   <Container text style={{ marginTop: '5em' }}>
+    {console.log(props.data)}
     <BaseStats
       pageViewsMonth={props.data.pageViewsMonth}
       pageViewsDay={props.data.pageViewsDay}

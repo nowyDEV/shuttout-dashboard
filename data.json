@@ -1,0 +1,40 @@
+{
+  "data": [
+    {
+      "name": "photos_total",
+      "start-date": "2017-08-01",
+      "end-date": "2017-09-01",
+      "amount": "1266"
+    },
+    {
+      "name": "photos_premium",
+      "start-date": "2017-08-01",
+      "end-date": "2017-09-01",
+      "amount": "675"
+    },
+    {
+      "name": "votes_total",
+      "start-date": "2017-08-01",
+      "end-date": "2017-09-01",
+      "amount": "4432"
+    },
+    {
+      "name": "entry_fees",
+      "start-date": "2017-08-01",
+      "end-date": "2017-09-01",
+      "amount": "5651"
+    },
+    {
+      "name": "gold_total",
+      "start-date": "2017-08-01",
+      "end-date": "2017-09-01",
+      "amount": "454"
+    },
+    {
+      "name": "gold_payed_out",
+      "start-date": "2017-08-01",
+      "end-date": "2017-09-01",
+      "amount": "115"
+    }
+  ]
+}
