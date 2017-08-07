@@ -3,7 +3,6 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { Header, Loader } from 'semantic-ui-react';
-import axios from 'axios';
 
 import { CLIENT_ID } from './config/api_credentials';
 
@@ -18,6 +17,13 @@ import totalPageviews from './gapi_calls/total_pageviews';
 import bounceRate from './gapi_calls/bounce_rate';
 import exitRate from './gapi_calls/exit_rate';
 
+import entryFees from './shuttout_api_calls/entry_fees';
+import goldPayedOut from './shuttout_api_calls/gold_payed_out';
+import goldTotal from './shuttout_api_calls/gold_total';
+import photosPremium from './shuttout_api_calls/photos_premium';
+import photosTotal from './shuttout_api_calls/photos_total';
+import votesTotal from './shuttout_api_calls/votes_total';
+
 import TopMenu from './TopMenu';
 import DisplayPanel from './DisplayPanel';
 
@@ -25,16 +31,12 @@ class App extends Component {
   state = {
     apiLoaded: false,
     googleData: {},
-    apiData: {}
+    shuttoutData: {}
   };
 
   componentDidMount() {
     this.gapiInit();
-    axios
-      .get('http://localhost:3000/data')
-      .then((response: { data: { name: string, 'start-date': string, 'end-date': string, amount: string }}) => {
-        this.setState({ apiData: response.data });
-      });
+    this.shuttoutApiCall();
   }
 
   gapiInit() {
@@ -53,6 +55,45 @@ class App extends Component {
           authButton.innerHTML = '';
         }
         this.gapiCall();
+      });
+    });
+  }
+
+  shuttoutApiCall() {
+    /**
+     * Make api call and update state
+     */
+    const shuttoutResponseData = {
+      entryFees: {},
+      goldPayedOut: {},
+      goldTotal: {},
+      photosPremium: {},
+      photosTotal: {},
+      votesTotal: {}
+    };
+
+    Promise.all([
+      entryFees.then(response => {
+        shuttoutResponseData.entryFees = response;
+      }),
+      goldPayedOut.then(response => {
+        shuttoutResponseData.goldPayedOut = response;
+      }),
+      goldTotal.then(response => {
+        shuttoutResponseData.goldTotal = response;
+      }),
+      photosPremium.then(response => {
+        shuttoutResponseData.photosPremium = response;
+      }),
+      photosTotal.then(response => {
+        shuttoutResponseData.photosTotal = response;
+      }),
+      votesTotal.then(response => {
+        shuttoutResponseData.votesTotal = response;
+      })
+    ]).then(() => {
+      this.setState({
+        shuttoutData: shuttoutResponseData
       });
     });
   }
@@ -204,9 +245,9 @@ class App extends Component {
     if (this.state.apiLoaded === true) {
       return (
         <div>
-          {console.log(this.state.googleData)}
           <TopMenu />
-          <DisplayPanel data={this.state.googleData} />
+          {console.log(this.state.shuttoutData)}
+          <DisplayPanel googleData={this.state.googleData} />
         </div>
       );
     }
