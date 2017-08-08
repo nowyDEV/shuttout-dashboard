@@ -7,7 +7,8 @@ const RegisteredUsersChart = (props: {
   registeredUsersData: ChartjsData,
   displayTitle: boolean,
   displayLegend: boolean,
-  legendPosition: string
+  legendPosition: string,
+  customTitle: string
 }) =>
   <div>
     <HorizontalBar
@@ -17,7 +18,7 @@ const RegisteredUsersChart = (props: {
       options={{
         title: {
           display: props.displayTitle,
-          text: 'Registrations per month'
+          text: props.customTitle
         },
         legend: {
           display: props.displayLegend,

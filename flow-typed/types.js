@@ -1,23 +1,63 @@
-export type Data = {
+// @flow
+
+export type gapiData = {
   browsers: ChartjsData,
   pageViewsMonth: string,
   pageViewsDay: string,
-  activeUsersMonthly: array,
   userDevice: ChartjsData,
   newUsers: ChartjsData,
   registeredUsers: ChartjsData,
   exitRate: string,
   bounceRate: string,
-  uniquePageviews: string
-}
+  uniquePageviews: string,
+  entryFees: ChartjsData,
+  goldPayedOut: ChartjsData,
+  goldTotal: ChartjsData,
+  photosPremium: ChartjsData,
+  photosTotal: ChartjsData,
+  votesTotal: ChartjsData,
+  photoOfTheDay: ShuttoutPhoto,
+  photoLastUploaded: ShuttoutPhoto
+};
 
 export type ChartjsData = {
-  datasets: array<ChartjsDatasets>,
-  labels: array<string>
+  datasets: Array<ChartjsDatasets>,
+  labels: Array<string>
 };
 
 export type ChartjsDatasets = {
-  backgroundColor: array<string>,
-  data: array<string>
-}
+  backgroundColor: Array<string>,
+  data: Array<string>,
+  borderWidth: number,
+  label: string,
+  meta: Object
+};
 
+// export type ShuttoutData = {
+//   entryFees: ShuttoutStandardResponse,
+//   goldPayedOut: ShuttoutStandardResponse,
+//   goldTotal: ShuttoutStandardResponse,
+//   photosPremium: ShuttoutStandardResponse,
+//   photosTotal: ShuttoutStandardResponse,
+//   votesTotal: ShuttoutStandardResponse,
+//   photoOfTheDay: ShuttoutPhoto,
+//   photoLastUploaded: ShuttoutPhoto
+// };
+
+// export type ShuttoutStandardResponse = {
+//   rows: Array<Array<string>>,
+//   name: string,
+//   totalForAllResults: string,
+//   totalResults: string,
+//   startDate: string,
+//   endDate: string
+// };
+
+export type ShuttoutPhoto = {
+  data: {
+    description: string,
+    url: string,
+    votes?: string
+  },
+  name: string
+};

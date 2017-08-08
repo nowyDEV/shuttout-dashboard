@@ -3,29 +3,35 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { Header, Loader } from 'semantic-ui-react';
+import Perf from 'react-addons-perf';
 
 import { CLIENT_ID } from './config/api_credentials';
+import createChartData from './utils/create_chartjs_data';
 
-import browsersQuery from './gapi_calls/browsers';
-import devicesQuery from './gapi_calls/devices';
-import newUsersDay from './gapi_calls/new_users_day';
-import newUsersMonth from './gapi_calls/new_users_month';
-import newUsersMonthDay from './gapi_calls/new_users_month_day';
-import activeUsersMonth from './gapi_calls/active_users_month';
-import registrationsQuery from './gapi_calls/registrations';
-import totalPageviews from './gapi_calls/total_pageviews';
-import bounceRate from './gapi_calls/bounce_rate';
-import exitRate from './gapi_calls/exit_rate';
+import browsersQuery from './api/gapi_calls/browsers';
+import devicesQuery from './api/gapi_calls/devices';
+import newUsersDay from './api/gapi_calls/new_users_day';
+import newUsersMonth from './api/gapi_calls/new_users_month';
+import newUsersMonthDay from './api/gapi_calls/new_users_month_day';
+import registrationsQuery from './api/gapi_calls/registrations';
+import totalPageviews from './api/gapi_calls/total_pageviews';
+import bounceRate from './api/gapi_calls/bounce_rate';
+import exitRate from './api/gapi_calls/exit_rate';
 
-import entryFees from './shuttout_api_calls/entry_fees';
-import goldPayedOut from './shuttout_api_calls/gold_payed_out';
-import goldTotal from './shuttout_api_calls/gold_total';
-import photosPremium from './shuttout_api_calls/photos_premium';
-import photosTotal from './shuttout_api_calls/photos_total';
-import votesTotal from './shuttout_api_calls/votes_total';
+import entryFees from './api/shuttout_api_calls/entry_fees';
+import goldPayedOut from './api/shuttout_api_calls/gold_payed_out';
+import goldTotal from './api/shuttout_api_calls/gold_total';
+import photosPremium from './api/shuttout_api_calls/photos_premium';
+import photosTotal from './api/shuttout_api_calls/photos_total';
+import votesTotal from './api/shuttout_api_calls/votes_total';
+import photoOfTheDay from './api/shuttout_api_calls/photo_of_the_day';
+import photoLastUploaded from './api/shuttout_api_calls/photo_last_uploaded';
 
 import TopMenu from './TopMenu';
 import DisplayPanel from './DisplayPanel';
+
+window.Perf = Perf;
+Perf.start();
 
 class App extends Component {
   state = {
@@ -69,27 +75,65 @@ class App extends Component {
       goldTotal: {},
       photosPremium: {},
       photosTotal: {},
-      votesTotal: {}
+      votesTotal: {},
+      photoOfTheDay: {},
+      photoLastUploaded: {}
     };
 
     Promise.all([
       entryFees.then(response => {
-        shuttoutResponseData.entryFees = response;
+        shuttoutResponseData.entryFees = createChartData(response.data[0], {
+          label: 'Entry Fees',
+          backgroundColor: 'rgba(0,0,102, 0.3)',
+          borderColor: 'rgba(255, 99, 132, 0.95)',
+          months: true
+        });
       }),
       goldPayedOut.then(response => {
-        shuttoutResponseData.goldPayedOut = response;
+        shuttoutResponseData.goldPayedOut = createChartData(response.data[0], {
+          label: 'Money Payed Out',
+          backgroundColor: 'rgba(0,51,51, 0.3)',
+          borderColor: 'rgba(255, 99, 132, 0.95)',
+          months: true
+        });
       }),
       goldTotal.then(response => {
-        shuttoutResponseData.goldTotal = response;
+        shuttoutResponseData.goldTotal = createChartData(response.data[0], {
+          label: 'Total Money',
+          backgroundColor: 'rgba(0,153,0, 0.3)',
+          borderColor: 'rgba(255, 99, 132, 0.95)',
+          months: true
+        });
       }),
       photosPremium.then(response => {
-        shuttoutResponseData.photosPremium = response;
+        shuttoutResponseData.photosPremium = createChartData(response.data[0], {
+          label: 'Premium Photos',
+          backgroundColor: 'rgba(0,153,204, 0.3)',
+          borderColor: 'rgba(255, 99, 132, 0.95)',
+          months: true
+        });
       }),
       photosTotal.then(response => {
-        shuttoutResponseData.photosTotal = response;
+        shuttoutResponseData.photosTotal = createChartData(response.data[0], {
+          label: 'Total Photos',
+          backgroundColor: 'rgba(204,204,0, 0.3)',
+          borderColor: 'rgba(255, 99, 132, 0.95)',
+          months: true
+        });
       }),
       votesTotal.then(response => {
-        shuttoutResponseData.votesTotal = response;
+        shuttoutResponseData.votesTotal = createChartData(response.data[0], {
+          label: 'Total Votes',
+          backgroundColor: 'rgba(204,51,51, 0.3)',
+          borderColor: 'rgba(255, 99, 132, 0.95)',
+          months: true
+        });
+      }),
+      photoOfTheDay.then(response => {
+        shuttoutResponseData.photoOfTheDay = response.data[0];
+      }),
+      photoLastUploaded.then(response => {
+        shuttoutResponseData.photoLastUploaded = response.data[0];
       })
     ]).then(() => {
       this.setState({
@@ -106,7 +150,6 @@ class App extends Component {
       browsers: {},
       pageViewsMonth: '',
       pageViewsDay: '',
-      activeUsersMonthly: [],
       userDevice: {},
       newUsers: {},
       registeredUsers: {},
@@ -117,28 +160,15 @@ class App extends Component {
 
     Promise.all([
       browsersQuery.then(response => {
-        responseData.browsers = {
-          labels: [],
-          datasets: [
-            {
-              label: 'Browser popularity',
-              data: [],
-              backgroundColor: []
-            }
+        responseData.browsers = createChartData(response, {
+          label: 'Browser popularity',
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.6)',
+            'rgba(54, 162, 235, 0.6)',
+            'rgba(255, 206, 86, 0.6)',
+            'rgba(75, 192, 192, 0.6)',
+            'rgba(153, 102, 255, 0.6)'
           ]
-        };
-        const colors = [
-          'rgba(255, 99, 132, 0.6)',
-          'rgba(54, 162, 235, 0.6)',
-          'rgba(255, 206, 86, 0.6)',
-          'rgba(75, 192, 192, 0.6)',
-          'rgba(153, 102, 255, 0.6)'
-        ];
-
-        response.rows.forEach((row, i) => {
-          responseData.browsers.datasets[0].data.push(+row[1]);
-          responseData.browsers.datasets[0].backgroundColor.push(colors[i]);
-          responseData.browsers.labels.push(row[0]);
         });
       }),
       newUsersMonth.then(response => {
@@ -147,81 +177,27 @@ class App extends Component {
       newUsersDay.then(response => {
         responseData.pageViewsDay = response.rows[0][0];
       }),
-      activeUsersMonth.then(response => {
-        response.rows.forEach(row => {
-          responseData.activeUsersMonthly.push({ date: row[0], amount: row[1] });
-        });
-      }),
       devicesQuery.then(response => {
-        responseData.userDevice = {
-          labels: [],
-          datasets: [
-            {
-              label: 'Device popularity',
-              data: [],
-              backgroundColor: []
-            }
-          ]
-        };
-        const colors = ['rgba(255, 99, 132, 0.6)', 'rgba(54, 162, 235, 0.6)', 'rgba(255, 206, 86, 0.6)'];
-
-        response.rows.forEach((row, i) => {
-          responseData.userDevice.datasets[0].data.push(+row[1]);
-          responseData.userDevice.datasets[0].backgroundColor.push(colors[i]);
-          responseData.userDevice.labels.push(row[0]);
+        responseData.userDevice = createChartData(response, {
+          label: 'Device popularity',
+          backgroundColor: ['rgba(255, 99, 132, 0.6)', 'rgba(54, 162, 235, 0.6)', 'rgba(255, 206, 86, 0.6)']
         });
       }),
       newUsersMonthDay.then(response => {
-        responseData.newUsers = {
-          labels: [],
-          datasets: [
-            {
-              label: 'New user visits',
-              data: [],
-              backgroundColor: `transparent`,
-              borderColor: 'rgba(54, 162, 235, 0.95)',
-              borderWidth: 2
-            }
-          ]
-        };
-
-        response.rows.forEach(row => {
-          responseData.newUsers.datasets[0].data.push(+row[1]);
-          responseData.newUsers.labels.push(`day ${row[0]}`);
+        responseData.newUsers = createChartData(response, {
+          label: 'New user visits',
+          backgroundColor: 'transparent',
+          borderColor: 'rgba(54, 162, 235, 0.95)',
+          borderWidth: 2,
+          day: true
         });
       }),
       registrationsQuery.then(response => {
-        responseData.registeredUsers = {
-          labels: [],
-          datasets: [
-            {
-              label: 'Registered Users',
-              data: [],
-              backgroundColor: 'rgba(255, 99, 132, 0.3)',
-              borderWidth: 1,
-              borderColor: 'rgba(255, 99, 132, 0.95)'
-            }
-          ]
-        };
-
-        const months = [
-          'January',
-          'February',
-          'March',
-          'April',
-          'May',
-          'June',
-          'July',
-          'August',
-          'September',
-          'October',
-          'November',
-          'December'
-        ];
-
-        response.rows.forEach(row => {
-          responseData.registeredUsers.datasets[0].data.push(+row[1]);
-          responseData.registeredUsers.labels.push(months[parseInt(row[0], 10) - 1]);
+        responseData.registeredUsers = createChartData(response, {
+          label: 'Registered Users',
+          backgroundColor: 'rgba(255, 99, 132, 0.3)',
+          borderColor: 'rgba(255, 99, 132, 0.95)',
+          months: true
         });
       }),
       exitRate.then(response => {
@@ -246,8 +222,7 @@ class App extends Component {
       return (
         <div>
           <TopMenu />
-          {console.log(this.state.shuttoutData)}
-          <DisplayPanel googleData={this.state.googleData} />
+          <DisplayPanel data={this.state.googleData} shuttoutData={this.state.shuttoutData} />
         </div>
       );
     }
