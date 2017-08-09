@@ -2,14 +2,15 @@
 
 export type gapiData = {
   browsers: ChartjsData,
-  pageViewsMonth: string,
-  pageViewsDay: string,
+  pageViewsMonth: number,
+  pageViewsMonthPrevious: number,
+  pageViewsDay: number,
+  pageViewsDayPrevious: number,
   userDevice: ChartjsData,
   newUsers: ChartjsData,
   registeredUsers: ChartjsData,
   exitRate: string,
   bounceRate: string,
-  uniquePageviews: string,
   entryFees: ChartjsData,
   goldPayedOut: ChartjsData,
   goldTotal: ChartjsData,

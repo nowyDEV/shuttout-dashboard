@@ -10,11 +10,10 @@ import createChartData from './utils/create_chartjs_data';
 
 import browsersQuery from './api/gapi_calls/browsers';
 import devicesQuery from './api/gapi_calls/devices';
-import newUsersDay from './api/gapi_calls/new_users_day';
-import newUsersMonth from './api/gapi_calls/new_users_month';
+import { newUsersDay, newUsersDayPrevious } from './api/gapi_calls/new_users_day';
+import { newUsersMonth, newUsersMonthPrevious } from './api/gapi_calls/new_users_month';
 import newUsersMonthDay from './api/gapi_calls/new_users_month_day';
 import registrationsQuery from './api/gapi_calls/registrations';
-import totalPageviews from './api/gapi_calls/total_pageviews';
 import bounceRate from './api/gapi_calls/bounce_rate';
 import exitRate from './api/gapi_calls/exit_rate';
 
@@ -148,14 +147,15 @@ class App extends Component {
      */
     const responseData = {
       browsers: {},
-      pageViewsMonth: '',
-      pageViewsDay: '',
+      pageViewsMonth: 0,
+      pageViewsMonthPrevious: 0,
+      pageViewsDay: 0,
+      pageViewsDayPrevious: 0,
       userDevice: {},
       newUsers: {},
       registeredUsers: {},
       exitRate: '',
-      bounceRate: '',
-      uniquePageviews: ''
+      bounceRate: ''
     };
 
     Promise.all([
@@ -172,10 +172,16 @@ class App extends Component {
         });
       }),
       newUsersMonth.then(response => {
-        responseData.pageViewsMonth = response.rows[0][0];
+        responseData.pageViewsMonth = parseInt(response.rows[0][0], 10);
+      }),
+      newUsersMonthPrevious.then(response => {
+        responseData.pageViewsMonthPrevious = parseInt(response.rows[0][0], 10);
       }),
       newUsersDay.then(response => {
-        responseData.pageViewsDay = response.rows[0][0];
+        responseData.pageViewsDay = parseInt(response.rows[0][0], 10);
+      }),
+      newUsersDayPrevious.then(response => {
+        responseData.pageViewsDayPrevious = parseInt(response.rows[0][0], 10);
       }),
       devicesQuery.then(response => {
         responseData.userDevice = createChartData(response, {
@@ -205,9 +211,6 @@ class App extends Component {
       }),
       bounceRate.then(response => {
         responseData.bounceRate = response.rows[0][0];
-      }),
-      totalPageviews.then(response => {
-        responseData.uniquePageviews = response.rows[0][0];
       })
     ]).then(() => {
       this.setState({

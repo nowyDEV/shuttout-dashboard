@@ -1,23 +1,24 @@
 // @flow
 
 import React from 'react';
-import { Pie } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
 
-const BrowserChart = (props: {
-  browserData: ChartjsData,
+const BarChart = (props: {
+  data: ChartjsData,
   displayTitle: boolean,
   displayLegend: boolean,
-  legendPosition: string
+  legendPosition: string,
+  customTitle: string
 }) =>
   <div>
-    <Pie
-      data={props.browserData}
+    <Bar
+      data={props.data}
       width={100}
       height={50}
       options={{
         title: {
           display: props.displayTitle,
-          text: 'Browser popularity'
+          text: props.customTitle
         },
         legend: {
           display: props.displayLegend,
@@ -28,4 +29,4 @@ const BrowserChart = (props: {
     />
   </div>;
 
-export default BrowserChart;
+export default BarChart;
