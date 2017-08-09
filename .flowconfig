@@ -1,0 +1,10 @@
+[ignore]
+<PROJECT_ROOT>/node_modules/styled-components/*
+<PROJECT_ROOT>/node_modules/emotion/*
+
+[include]
+
+[libs]
+styled-components
+emotion
+[options]
