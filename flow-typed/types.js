@@ -23,7 +23,8 @@ export type gapiData = {
 
 export type ChartjsData = {
   datasets: Array<ChartjsDatasets>,
-  labels: Array<string>
+  labels: Array<string>,
+  totalAmount: number
 };
 
 export type ChartjsDatasets = {
@@ -33,26 +34,6 @@ export type ChartjsDatasets = {
   label: string,
   meta: Object
 };
-
-// export type ShuttoutData = {
-//   entryFees: ShuttoutStandardResponse,
-//   goldPayedOut: ShuttoutStandardResponse,
-//   goldTotal: ShuttoutStandardResponse,
-//   photosPremium: ShuttoutStandardResponse,
-//   photosTotal: ShuttoutStandardResponse,
-//   votesTotal: ShuttoutStandardResponse,
-//   photoOfTheDay: ShuttoutPhoto,
-//   photoLastUploaded: ShuttoutPhoto
-// };
-
-// export type ShuttoutStandardResponse = {
-//   rows: Array<Array<string>>,
-//   name: string,
-//   totalForAllResults: string,
-//   totalResults: string,
-//   startDate: string,
-//   endDate: string
-// };
 
 export type ShuttoutPhoto = {
   data: {

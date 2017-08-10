@@ -8,7 +8,8 @@ const createChartData = (inputData: {
   borderColor?: string,
   borderWidth?: number,
   month?: boolean,
-  day?: boolean
+  day?: boolean,
+  addTotal?: boolean
 }) => {
   const outputData = {
     labels: [],
@@ -54,6 +55,10 @@ const createChartData = (inputData: {
       outputData.datasets[0].data.push(+row[1]);
       outputData.labels.push(row[0]);
     });
+  }
+
+  if (params.addTotal === true) {
+    (outputData: Object).totalAmount = parseInt(inputData.totalForAllResults, 10);
   }
 
   return outputData;

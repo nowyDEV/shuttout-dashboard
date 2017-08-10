@@ -3,15 +3,15 @@
 import React from 'react';
 import { Line } from 'react-chartjs-2';
 
-const NewUsersChart = (props: {
-  newUsersData: ChartjsData,
+const LineChart = (props: {
+  data: ChartjsData,
   displayTitle: boolean,
   displayLegend: boolean,
   legendPosition: string
 }) =>
   <div>
     <Line
-      data={props.newUsersData}
+      data={props.data}
       width={100}
       height={50}
       options={{
@@ -28,4 +28,4 @@ const NewUsersChart = (props: {
     />
   </div>;
 
-export default NewUsersChart;
+export default LineChart;

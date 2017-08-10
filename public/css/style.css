@@ -2,6 +2,26 @@
     display: none;
 }
 
+.ui.horizontal.statistic {
+    justify-content: center;
+}
+
+.ui.labeled.icon.menu .item {
+    text-align: left;
+}
+
+.ui.checkbox .box, .ui.checkbox label {
+    padding-left: 2.4em;
+}
+
+.ui.checkbox label, .ui.checkbox+label {
+    color: rgba(255,255,255,.9);
+}
+
+.ui.checkbox label:hover, .ui.checkbox+label:hover {
+    color: rgba(255,255,255,.6);
+}
+
 @media only screen and (max-width: 768px) {
     .ui.statistics {
         flex-flow: column wrap;

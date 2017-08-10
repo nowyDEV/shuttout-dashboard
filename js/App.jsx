@@ -3,7 +3,6 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { Header, Loader } from 'semantic-ui-react';
-import Perf from 'react-addons-perf';
 
 import { CLIENT_ID } from './config/api_credentials';
 import createChartData from './utils/create_chartjs_data';
@@ -26,11 +25,7 @@ import votesTotal from './api/shuttout_api_calls/votes_total';
 import photoOfTheDay from './api/shuttout_api_calls/photo_of_the_day';
 import photoLastUploaded from './api/shuttout_api_calls/photo_last_uploaded';
 
-import TopMenu from './TopMenu';
 import DisplayPanel from './DisplayPanel';
-
-window.Perf = Perf;
-Perf.start();
 
 class App extends Component {
   state = {
@@ -109,7 +104,8 @@ class App extends Component {
           label: 'Premium Photos',
           backgroundColor: 'rgba(0,153,204, 0.3)',
           borderColor: 'rgba(255, 99, 132, 0.95)',
-          months: true
+          months: true,
+          addTotal: true
         });
       }),
       photosTotal.then(response => {
@@ -117,7 +113,8 @@ class App extends Component {
           label: 'Total Photos',
           backgroundColor: 'rgba(204,204,0, 0.3)',
           borderColor: 'rgba(255, 99, 132, 0.95)',
-          months: true
+          months: true,
+          addTotal: true
         });
       }),
       votesTotal.then(response => {
@@ -222,12 +219,7 @@ class App extends Component {
 
   render() {
     if (this.state.apiLoaded === true) {
-      return (
-        <div>
-          <TopMenu />
-          <DisplayPanel data={this.state.googleData} shuttoutData={this.state.shuttoutData} />
-        </div>
-      );
+      return <DisplayPanel data={this.state.googleData} shuttoutData={this.state.shuttoutData} />;
     }
     return (
       <Header as="h2" textAlign="center" style={{ marginTop: '7em' }}>

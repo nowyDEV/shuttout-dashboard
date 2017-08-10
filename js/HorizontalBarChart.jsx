@@ -1,23 +1,24 @@
 // @flow
 
 import React from 'react';
-import { Doughnut } from 'react-chartjs-2';
+import { HorizontalBar } from 'react-chartjs-2';
 
-const DeviceChart = (props: {
-  userDeviceData: ChartjsData,
+const HorizontalBarChart = (props: {
+  data: ChartjsData,
   displayTitle: boolean,
   displayLegend: boolean,
-  legendPosition: string
+  legendPosition: string,
+  customTitle: string
 }) =>
   <div>
-    <Doughnut
-      data={props.userDeviceData}
+    <HorizontalBar
+      data={props.data}
       width={100}
       height={50}
       options={{
         title: {
           display: props.displayTitle,
-          text: 'Device popularity'
+          text: props.customTitle
         },
         legend: {
           display: props.displayLegend,
@@ -28,4 +29,4 @@ const DeviceChart = (props: {
     />
   </div>;
 
-export default DeviceChart;
+export default HorizontalBarChart;
