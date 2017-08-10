@@ -15,32 +15,48 @@ import BarChart from './BarChart';
 
 class DisplayPanel extends Component {
   state = {
-    display: {
-      photoPanel: true,
-      baseStats: true,
-      photosChart: true,
-      registeredUsers: true,
-      entryFees: true,
-      goldChart: true,
-      totalVotes: true,
-      newUsers: true,
-      deviceAndBrowser: true,
-      additionalStats: true
-    }
+    sidemenuVisible: false,
+    activeItem: false,
+    photoPanel: true,
+    baseStats: true,
+    photosChart: true,
+    registeredUsers: true,
+    entryFees: true,
+    goldChart: true,
+    totalVotes: true,
+    newUsers: true,
+    deviceAndBrowser: true,
+    additionalStats: true
   };
 
   props: { data: gapiData, shuttoutData: gapiData };
+
+  handleCheckboxChange = (event: Event, data: Object) => {
+    this.setState({ [data.name]: data.checked });
+  };
+
+  handleMenuClick = () => {
+    this.setState({
+      activeItem: !this.state.activeItem,
+      sidemenuVisible: !this.state.sidemenuVisible
+    });
+  };
 
   render() {
     const { data, shuttoutData } = this.props;
     return (
       <div>
-        <TopMenu />
+        <TopMenu
+          sidemenuVisible={this.state.sidemenuVisible}
+          activeItem={this.state.activeItem}
+          handleCheckboxChange={this.handleCheckboxChange}
+          handleMenuClick={this.handleMenuClick}
+        />
         <Container text style={{ marginTop: '5em' }}>
-          {this.state.display.photoPanel
+          {this.state.photoPanel
             ? <PhotoPanel lastUploadedData={shuttoutData.photoLastUploaded} ofTheDayData={shuttoutData.photoOfTheDay} />
             : null}
-          {this.state.display.photoPanel
+          {this.state.baseStats
             ? <BaseStats
                 pageViewsMonth={data.pageViewsMonth}
                 pageViewsMonthPrevious={data.pageViewsMonthPrevious}
@@ -51,11 +67,11 @@ class DisplayPanel extends Component {
               />
             : null}
           <Divider />
-          {this.state.display.photosChart
+          {this.state.photosChart
             ? <MixedChart dataOne={shuttoutData.photosTotal} dataTwo={shuttoutData.photosPremium} />
             : null}
           <Divider />
-          {this.state.display.registeredUsers
+          {this.state.registeredUsers
             ? <HorizontalBarChart
                 customTitle={'Registered Users'}
                 data={data.registeredUsers}
@@ -65,7 +81,7 @@ class DisplayPanel extends Component {
               />
             : null}
           <Divider />
-          {this.state.display.entryFees
+          {this.state.entryFees
             ? <BarChart
                 customTitle={'Entry Fees'}
                 data={shuttoutData.entryFees}
@@ -75,11 +91,11 @@ class DisplayPanel extends Component {
               />
             : null}
           <Divider />
-          {this.state.display.goldChart
+          {this.state.goldChart
             ? <MixedChart dataOne={shuttoutData.goldTotal} dataTwo={shuttoutData.goldPayedOut} />
             : null}
           <Divider />
-          {this.state.display.votesTotal
+          {this.state.totalVotes
             ? <BarChart
                 customTitle={'Total Votes'}
                 data={shuttoutData.votesTotal}
@@ -89,11 +105,11 @@ class DisplayPanel extends Component {
               />
             : null}
           <Divider />
-          {this.state.display.newUsers
+          {this.state.newUsers
             ? <LineChart data={data.newUsers} legendPosition="bottom" displayLegend={false} displayTitle />
             : null}
           <Divider />
-          {this.state.display.deviceAndBrowser
+          {this.state.deviceAndBrowser
             ? <Grid doubling columns={2}>
                 <Grid.Column>
                   <DoughnutChart data={data.userDevice} legendPosition="bottom" displayLegend displayTitle />
@@ -105,7 +121,7 @@ class DisplayPanel extends Component {
             : null}
 
           <Divider />
-          {this.state.display.additionalStats
+          {this.state.additionalStats
             ? <AdditionalStats
                 exitRate={parseFloat(data.exitRate).toFixed(2)}
                 bounceRate={parseFloat(data.bounceRate).toFixed(2)}
