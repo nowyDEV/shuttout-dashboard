@@ -1,6 +1,6 @@
 // @flow
 
-export type gapiData = {
+export type apiData = {
   browsers: ChartjsData,
   pageViewsMonth: number,
   pageViewsMonthPrevious: number,

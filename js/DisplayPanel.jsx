@@ -1,7 +1,7 @@
 // @flow
 
 import React, { Component } from 'react';
-import { Container, Divider, Grid } from 'semantic-ui-react';
+import { Container, Divider, Grid, Transition } from 'semantic-ui-react';
 import TopMenu from './TopMenu';
 import PhotoPanel from './PhotoPanel';
 import BaseStats from './BaseStats';
@@ -29,7 +29,7 @@ class DisplayPanel extends Component {
     additionalStats: true
   };
 
-  props: { data: gapiData, shuttoutData: gapiData };
+  props: { data: apiData, shuttoutData: apiData };
 
   handleCheckboxChange = (event: Event, data: Object) => {
     this.setState({ [data.name]: data.checked });
@@ -53,80 +53,113 @@ class DisplayPanel extends Component {
           handleMenuClick={this.handleMenuClick}
         />
         <Container text style={{ marginTop: '5em' }}>
-          {this.state.photoPanel
-            ? <PhotoPanel lastUploadedData={shuttoutData.photoLastUploaded} ofTheDayData={shuttoutData.photoOfTheDay} />
-            : null}
-          {this.state.baseStats
-            ? <BaseStats
+          <Transition visible={this.state.photoPanel} animation='scale' duration={500}>
+            <div>
+              <PhotoPanel lastUploadedData={shuttoutData.photoLastUploaded} ofTheDayData={shuttoutData.photoOfTheDay} unmountOnHide />
+              <Divider />
+            </div>
+          </Transition>
+
+          <Transition visible={this.state.baseStats} animation='fade right' duration={500}>
+            <div>
+              <BaseStats
                 pageViewsMonth={data.pageViewsMonth}
                 pageViewsMonthPrevious={data.pageViewsMonthPrevious}
                 pageViewsDay={data.pageViewsDay}
                 pageViewsDayPrevious={data.pageViewsDayPrevious}
                 photosTotalAmount={shuttoutData.photosTotal.totalAmount}
                 photosPremiumAmount={shuttoutData.photosPremium.totalAmount}
+                unmountOnHide
               />
-            : null}
-          <Divider />
-          {this.state.photosChart
-            ? <MixedChart dataOne={shuttoutData.photosTotal} dataTwo={shuttoutData.photosPremium} />
-            : null}
-          <Divider />
-          {this.state.registeredUsers
-            ? <HorizontalBarChart
+              <Divider />
+            </div>
+          </Transition>
+
+          <Transition visible={this.state.photosChart} animation='fade down' duration={500}>
+            <div>
+              <MixedChart dataOne={shuttoutData.photosTotal} dataTwo={shuttoutData.photosPremium} unmountOnHide />
+              <Divider />
+            </div>
+          </Transition>
+
+          <Transition visible={this.state.registeredUsers} animation='fade up' duration={500}>
+            <div>
+              <HorizontalBarChart
                 customTitle={'Registered Users'}
                 data={data.registeredUsers}
                 legendPosition="bottom"
                 displayLegend={false}
                 displayTitle
+                unmountOnHide
               />
-            : null}
-          <Divider />
-          {this.state.entryFees
-            ? <BarChart
+              <Divider />
+            </div>
+          </Transition>
+
+          <Transition visible={this.state.entryFees} animation='fade down' duration={500}>
+            <div>
+              <BarChart
                 customTitle={'Entry Fees'}
                 data={shuttoutData.entryFees}
                 legendPosition="bottom"
                 displayLegend={false}
                 displayTitle
+                unmountOnHide
               />
-            : null}
-          <Divider />
-          {this.state.goldChart
-            ? <MixedChart dataOne={shuttoutData.goldTotal} dataTwo={shuttoutData.goldPayedOut} />
-            : null}
-          <Divider />
-          {this.state.totalVotes
-            ? <BarChart
+              <Divider />
+            </div>
+          </Transition>
+
+          <Transition visible={this.state.goldChart} animation='fade up' duration={500}>
+            <div>
+              <MixedChart dataOne={shuttoutData.goldTotal} dataTwo={shuttoutData.goldPayedOut} unmountOnHide />
+              <Divider />
+            </div>
+          </Transition>
+
+          <Transition visible={this.state.totalVotes} animation='fade down' duration={500}>
+            <div>
+              <BarChart
                 customTitle={'Total Votes'}
                 data={shuttoutData.votesTotal}
                 legendPosition="bottom"
                 displayLegend={false}
                 displayTitle
+                unmountOnHide
               />
-            : null}
-          <Divider />
-          {this.state.newUsers
-            ? <LineChart data={data.newUsers} legendPosition="bottom" displayLegend={false} displayTitle />
-            : null}
-          <Divider />
-          {this.state.deviceAndBrowser
-            ? <Grid doubling columns={2}>
+              <Divider />
+            </div>
+          </Transition>
+
+          <Transition visible={this.state.newUsers} animation='fade up' duration={500}>
+            <div>
+              <LineChart data={data.newUsers} legendPosition="bottom" displayLegend={false} displayTitle unmountOnHide />
+              <Divider />
+            </div>
+          </Transition>
+
+          <Transition visible={this.state.deviceAndBrowser} animation='scale' duration={500}>
+            <div>
+              <Grid doubling columns={2} >
                 <Grid.Column>
-                  <DoughnutChart data={data.userDevice} legendPosition="bottom" displayLegend displayTitle />
+                  <DoughnutChart data={data.userDevice} legendPosition="bottom" displayLegend displayTitle unmountOnHide />
                 </Grid.Column>
                 <Grid.Column>
-                  <PieChart data={data.browsers} legendPosition="bottom" displayLegend displayTitle />
+                  <PieChart data={data.browsers} legendPosition="bottom" displayLegend displayTitle unmountOnHide />
                 </Grid.Column>
               </Grid>
-            : null}
+            </div>
+          </Transition>
 
-          <Divider />
-          {this.state.additionalStats
-            ? <AdditionalStats
+          <Transition visible={this.state.additionalStats} animation='fade left' duration={500}>
+            <div>
+              <AdditionalStats
                 exitRate={parseFloat(data.exitRate).toFixed(2)}
                 bounceRate={parseFloat(data.bounceRate).toFixed(2)}
+                unmountOnHide
               />
-            : null}
+            </div>
+          </Transition>
         </Container>
       </div>
     );
