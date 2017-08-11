@@ -18,14 +18,14 @@ const BaseStats = (props: {
           <Icon name={props.pageViewsMonth > props.pageViewsMonthPrevious ? 'arrow up' : 'arrow down'} />
           {props.pageViewsMonth}
         </Statistic.Value>
-        <Statistic.Label>Monthly Views</Statistic.Label>
+        <Statistic.Label>Monthly Visitors</Statistic.Label>
       </Statistic>
       <Statistic>
         <Statistic.Value>
           <Icon name={props.pageViewsDay > props.pageViewsDayPrevious ? 'arrow up' : 'arrow down'} />
           {props.pageViewsDay}
         </Statistic.Value>
-        <Statistic.Label>Daily Views</Statistic.Label>
+        <Statistic.Label>Daily Visitors</Statistic.Label>
       </Statistic>
     </Statistic.Group>
     <Divider />
