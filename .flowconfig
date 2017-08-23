@@ -1,6 +1,7 @@
 [ignore]
 <PROJECT_ROOT>/node_modules/styled-components/*
 <PROJECT_ROOT>/node_modules/emotion/*
+<PROJECT_ROOT>/node_modules/react-resizable/build/ResizableBox.js
 
 [include]
 

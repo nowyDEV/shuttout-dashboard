@@ -1,27 +1,34 @@
 // @flow
 
 import React from 'react';
-import { Segment, Image, Grid } from 'semantic-ui-react';
+import { Image } from 'semantic-ui-react';
+import Carousel from 'react-slick';
+
+import '../node_modules/slick-carousel/slick/slick.css';
+import '../node_modules/slick-carousel/slick/slick-theme.css';
 
 const PhotoPanel = (props: { lastUploadedData: ShuttoutPhoto, ofTheDayData: ShuttoutPhoto }) =>
-  <Segment>
-    <Grid doubling columns={2}>
-      <Grid.Column>
-        <Image
-          fluid
-          label={{ as: 'a', color: 'black', content: 'Photo of the day', icon: 'like', ribbon: true }}
-          src={props.lastUploadedData.data.url}
-        />
-      </Grid.Column>
-
-      <Grid.Column>
-        <Image
-          fluid
-          label={{ as: 'a', color: 'black', content: 'Recently uploaded', icon: 'cloud upload', ribbon: true }}
-          src={props.ofTheDayData.data.url}
-        />
-      </Grid.Column>
-    </Grid>
-  </Segment>
+  <Carousel
+    className="photo-carousel"
+    swipe
+    touchMove
+    draggable
+    dots={false}
+    autoplay
+    arrows={false}
+    autoplaySpeed='5000'
+    style={{ maxWidth: '400px', margin: '0 auto' }}
+  >
+    <Image
+      fluid
+      label={{ as: 'a', color: 'black', content: 'Photo of the day', icon: 'like', ribbon: true }}
+      src={props.lastUploadedData.data.url}
+    />
+    <Image
+      fluid
+      label={{ as: 'a', color: 'black', content: 'Recently uploaded', icon: 'cloud upload', ribbon: true }}
+      src={props.ofTheDayData.data.url}
+    />
+  </Carousel>;
 
 export default PhotoPanel;

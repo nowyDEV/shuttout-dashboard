@@ -26,6 +26,7 @@ module.exports = {
         test: /\.css$/,
         use: ['style-loader', 'css-loader'],
       },
+      { test: /\.(eot|woff|woff2|svg|ttf|gif)([\?]?.*)$/, loader: "file-loader" },
       {
         enforce: 'pre',
         test: /\.jsx?$/,
@@ -34,6 +35,7 @@ module.exports = {
       },
       {
         test: /\.jsx?$/,
+        exclude: /node_modules/,
         loader: 'babel-loader'
       }
     ]

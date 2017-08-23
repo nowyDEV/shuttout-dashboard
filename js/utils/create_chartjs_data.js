@@ -47,7 +47,7 @@ const createChartData = (inputData: {
   } else if (params.day === true) {
     inputData.rows.forEach(row => {
       outputData.datasets[0].data.push(+row[1]);
-      outputData.labels.push(`day ${row[0]}`);
+      outputData.labels.push(row[0]);
     });
 
   } else {
