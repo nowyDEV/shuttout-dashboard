@@ -140,6 +140,13 @@
         "description": "Street Style",
         "url": "https://app.shuttout.com/media/cache/resolve/entry/uploads/8adf7ea0cca1ccda3cd7e426fdbb229b0dee758a.jpg"
       }
+    },
+    {
+      "name": "photo_biggest_prize",
+      "data": {
+        "description": "Great Reflections",
+        "url": "http://app.shuttout.com/media/cache/entry/uploads/b9b1fd649827130a34c7888a69eb0840146da31a.jpg"
+      }
     }
   ]
 }

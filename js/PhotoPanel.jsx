@@ -7,7 +7,11 @@ import Carousel from 'react-slick';
 import '../node_modules/slick-carousel/slick/slick.css';
 import '../node_modules/slick-carousel/slick/slick-theme.css';
 
-const PhotoPanel = (props: { lastUploadedData: ShuttoutPhoto, ofTheDayData: ShuttoutPhoto }) =>
+const PhotoPanel = (props: {
+  lastUploadedData: ShuttoutPhoto,
+  ofTheDayData: ShuttoutPhoto,
+  biggestPrizeData: ShuttoutPhoto
+}) =>
   <Carousel
     className="photo-carousel"
     swipe
@@ -16,7 +20,7 @@ const PhotoPanel = (props: { lastUploadedData: ShuttoutPhoto, ofTheDayData: Shut
     dots={false}
     autoplay
     arrows={false}
-    autoplaySpeed='5000'
+    autoplaySpeed="5000"
     style={{ maxWidth: '400px', margin: '0 auto' }}
   >
     <Image
@@ -28,6 +32,11 @@ const PhotoPanel = (props: { lastUploadedData: ShuttoutPhoto, ofTheDayData: Shut
       fluid
       label={{ as: 'a', color: 'black', content: 'Recently uploaded', icon: 'cloud upload', ribbon: true }}
       src={props.ofTheDayData.data.url}
+    />
+    <Image
+      fluid
+      label={{ as: 'a', color: 'black', content: 'Biggest Prize', icon: 'dollar', ribbon: true }}
+      src={props.biggestPrizeData.data.url}
     />
   </Carousel>;
 

@@ -2,10 +2,14 @@
 
 export type apiData = {
   browsers: ChartjsData,
-  pageViewsMonth: number,
-  pageViewsMonthPrevious: number,
-  pageViewsDay: number,
-  pageViewsDayPrevious: number,
+  visitorsMonth: number,
+  visitorsMonthPrevious: number,
+  visitorsDay: number,
+  visitorsDayPrevious: number,
+  activeUsersMonth: number,
+  activeUsersMonthPrevious: number,
+  activeUsersDay: number,
+  activeUsersDayPrevious: number,
   userDevice: ChartjsData,
   newUsers: ChartjsData,
   registeredUsers: ChartjsData,
@@ -18,7 +22,8 @@ export type apiData = {
   photosTotal: ChartjsData,
   votesTotal: ChartjsData,
   photoOfTheDay: ShuttoutPhoto,
-  photoLastUploaded: ShuttoutPhoto
+  photoLastUploaded: ShuttoutPhoto,
+  photoBiggestPrize: ShuttoutPhoto
 };
 
 export type ChartjsData = {

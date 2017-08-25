@@ -1976,6 +1976,10 @@ del@^2.0.2:
     pinkie-promise "^2.0.0"
     rimraf "^2.2.8"
 
+delay-promise@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/delay-promise/-/delay-promise-2.1.0.tgz#f71d6827f7b826ea1eb6a0e7d93e0727986c1ef6"
+
 delayed-stream@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/delayed-stream/-/delayed-stream-1.0.0.tgz#df3ae199acadfb7d440aaae0b29e2272b24ec619"

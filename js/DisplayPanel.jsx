@@ -9,7 +9,6 @@ import BaseStats from './BaseStats';
 import AdditionalStats from './AdditionalStats';
 import PieChart from './PieChart';
 import DoughnutChart from './DoughnutChart';
-import LineChart from './LineChart';
 import HorizontalBarChart from './HorizontalBarChart';
 import MixedChart from './MixedChart';
 import BarChart from './BarChart';
@@ -65,6 +64,7 @@ class DisplayPanel extends Component {
                   <PhotoPanel
                     lastUploadedData={shuttoutData.photoLastUploaded}
                     ofTheDayData={shuttoutData.photoOfTheDay}
+                    biggestPrizeData={shuttoutData.photoBiggestPrize}
                     unmountOnHide
                   />
                 </div>
@@ -79,24 +79,14 @@ class DisplayPanel extends Component {
             <Transition visible={this.state.baseStats} animation="fade right" duration={500}>
               <div>
                 <BaseStats
-                  pageViewsMonth={data.pageViewsMonth}
-                  pageViewsMonthPrevious={data.pageViewsMonthPrevious}
-                  pageViewsDay={data.pageViewsDay}
-                  pageViewsDayPrevious={data.pageViewsDayPrevious}
-                  photosTotalAmount={shuttoutData.photosTotal.totalAmount}
-                  photosPremiumAmount={shuttoutData.photosPremium.totalAmount}
-                  unmountOnHide
-                />
-                <Divider />
-              </div>
-            </Transition>
-            <Transition visible={this.state.newUsers} animation="fade up" duration={500}>
-              <div>
-                <LineChart
-                  data={data.newUsers}
-                  legendPosition="bottom"
-                  displayLegend={false}
-                  displayTitle
+                  visitorsMonth={data.visitorsMonth}
+                  visitorsMonthPrevious={data.visitorsMonthPrevious}
+                  visitorsDay={data.visitorsDay}
+                  visitorsDayPrevious={data.visitorsDayPrevious}
+                  activeUsersMonth={data.activeUsersMonth}
+                  activeUsersMonthPrevious={data.activeUsersMonthPrevious}
+                  activeUsersDay={data.activeUsersDay}
+                  activeUsersDayPrevious={data.activeUsersDayPrevious}
                   unmountOnHide
                 />
                 <Divider />
