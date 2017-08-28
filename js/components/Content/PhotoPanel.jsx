@@ -4,8 +4,8 @@ import React from 'react';
 import { Image } from 'semantic-ui-react';
 import Carousel from 'react-slick';
 
-import '../node_modules/slick-carousel/slick/slick.css';
-import '../node_modules/slick-carousel/slick/slick-theme.css';
+import '../../../node_modules/slick-carousel/slick/slick.css';
+import '../../../node_modules/slick-carousel/slick/slick-theme.css';
 
 const PhotoPanel = (props: {
   lastUploadedData: ShuttoutPhoto,

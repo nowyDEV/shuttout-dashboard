@@ -3,19 +3,19 @@
 import React, { Component } from 'react';
 import { Container, Transition, Segment, Header, Icon, Divider } from 'semantic-ui-react';
 
-import TopMenu from './TopMenu';
-import PhotoPanel from './PhotoPanel';
-import PhotoStats from './PhotoStats';
-import TrafficStats from './TrafficStats';
-import AdditionalStats from './AdditionalStats';
-import PhotoChart from './PhotoChart';
-import BarChart from './BarChart';
-import TrafficChart from './TrafficChart';
-import MixedChart from './MixedChart';
+import TopMenu from '../components/TopMenu';
+import PhotoPanel from '../components/Content/PhotoPanel';
+import PhotoStats from '../components/Content/PhotoStats';
+import TrafficStats from '../components/Traffic/TrafficStats';
+import AdditionalStats from '../components/AdditionalStats';
+import PhotoChart from '../components/Content/PhotoChart';
+import BarChart from '../components/BarChart';
+import TrafficChart from '../components/Traffic/TrafficChart';
+import MixedChart from '../components/MixedChart';
+import BusinessStats from '../components/Business/BusinessStats';
 
-import '../node_modules/react-grid-layout/css/styles.css';
-import '../node_modules/react-resizable/css/styles.css';
-import BusinessStats from './BusinessStats'
+import '../../node_modules/react-grid-layout/css/styles.css';
+import '../../node_modules/react-resizable/css/styles.css';
 
 class DisplayPanel extends Component {
   state = {
@@ -63,7 +63,7 @@ class DisplayPanel extends Component {
               <Icon name="users" circular />
               <Header.Content>Traffic</Header.Content>
             </Header>
-            <Transition visible={this.state.baseStats} animation="fade right" duration={500}>
+            <Transition visible={this.state.trafficStats} animation="fade right" duration={500}>
               <div>
                 <TrafficStats
                   visitorsMonth={data.visitorsMonth}

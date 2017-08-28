@@ -9,15 +9,15 @@ const PhotoStats = (props: {
   photosPremiumMonth: ChartjsData,
   photosPremiumDay: ChartjsData
 }) => {
-  const photosTotalMonthCurrent = props.photosTotalMonth.datasets[0].data[11];
-  const photosTotalMonthPrevious = props.photosTotalMonth.datasets[0].data[10];
-  const photosTotalDayCurrent = props.photosTotalDay.datasets[0].data[6];
-  const photosTotalDayPrevious = props.photosTotalDay.datasets[0].data[5];
+  const photosTotalMonthCurrent = parseInt(props.photosTotalMonth.datasets[0].data[11], 10);
+  const photosTotalMonthPrevious = parseInt(props.photosTotalMonth.datasets[0].data[10], 10);
+  const photosTotalDayCurrent = parseInt(props.photosTotalDay.datasets[0].data[6], 10);
+  const photosTotalDayPrevious = parseInt(props.photosTotalDay.datasets[0].data[5], 10);
 
-  const photosPremiumMonthCurrent = props.photosPremiumMonth.datasets[0].data[11];
-  const photosPremiumMonthPrevious = props.photosPremiumMonth.datasets[0].data[10];
-  const photosPremiumDayCurrent = props.photosPremiumDay.datasets[0].data[6];
-  const photosPremiumDayPrevious = props.photosPremiumDay.datasets[0].data[5];
+  const photosPremiumMonthCurrent = parseInt(props.photosPremiumMonth.datasets[0].data[11], 10);
+  const photosPremiumMonthPrevious = parseInt(props.photosPremiumMonth.datasets[0].data[10], 10);
+  const photosPremiumDayCurrent = parseInt(props.photosPremiumDay.datasets[0].data[6], 10);
+  const photosPremiumDayPrevious = parseInt(props.photosPremiumDay.datasets[0].data[5], 10);
 
   const doesPhotosTotalGrowMonthly = photosTotalMonthCurrent > photosTotalMonthPrevious;
   const doesPhotosTotalGrowDaily = photosTotalDayCurrent > photosTotalDayPrevious;

@@ -1,22 +1,21 @@
 // @flow
 
 import React, { Component } from 'react';
-import { render } from 'react-dom';
 import { Header, Loader } from 'semantic-ui-react';
 
-import { CLIENT_ID } from './config/api_credentials';
-import createChartData from './utils/create_chartjs_data';
+import { CLIENT_ID } from '../config/api_credentials';
+import createChartData from '../utils/create_chartjs_data';
 
-import { visitorsDay, visitorsMonth } from './api/gapi_calls/visitors';
-import { activeUsersDay, activeUsersMonth } from './api/gapi_calls/active_users';
-import { registrationsDay, registrationsMonth, registrationsTotal } from './api/gapi_calls/registrations';
-import bounceRate from './api/gapi_calls/bounce_rate';
-import exitRate from './api/gapi_calls/exit_rate';
+import { visitorsDay, visitorsMonth } from '../api/gapi_calls/visitors';
+import { activeUsersDay, activeUsersMonth } from '../api/gapi_calls/active_users';
+import { registrationsDay, registrationsMonth, registrationsTotal } from '../api/gapi_calls/registrations';
+import bounceRate from '../api/gapi_calls/bounce_rate';
+import exitRate from '../api/gapi_calls/exit_rate';
 
-import entryFees from './api/shuttout_api_calls/entry_fees';
-import goldPayedOut from './api/shuttout_api_calls/gold_payed_out';
-import goldTotal from './api/shuttout_api_calls/gold_total';
-import votesTotal from './api/shuttout_api_calls/votes_total';
+import entryFees from '../api/shuttout_api_calls/entry_fees';
+import goldPayedOut from '../api/shuttout_api_calls/gold_payed_out';
+import goldTotal from '../api/shuttout_api_calls/gold_total';
+import votesTotal from '../api/shuttout_api_calls/votes_total';
 import {
   photoOfTheDay,
   photoBiggestPrize,
@@ -25,7 +24,7 @@ import {
   photosPremiumMonth,
   photosTotalDay,
   photosTotalMonth
-} from './api/shuttout_api_calls/photos';
+} from '../api/shuttout_api_calls/photos';
 
 import DisplayPanel from './DisplayPanel';
 
@@ -269,4 +268,4 @@ class App extends Component {
   }
 }
 
-render(<App />, document.getElementById('app'));
+export default App;

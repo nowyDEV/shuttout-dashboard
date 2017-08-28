@@ -22,7 +22,7 @@ const createChartData = (inputData: {
         borderColor: params.borderColor
       }
     ],
-    total: inputData.totalForAllResults
+    totalAmount: inputData.totalForAllResults
   };
 
   if (params.month === true) {

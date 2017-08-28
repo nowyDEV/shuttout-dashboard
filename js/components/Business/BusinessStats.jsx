@@ -4,11 +4,11 @@ import React from 'react';
 import { Statistic, Icon, Label, Segment, Grid } from 'semantic-ui-react';
 
 const BusinessStats = (props: {
-  entryFees: ChartJsData
+  entryFees: ChartjsData
 }) => {
-  const entryFeesMonthCurrent = props.entryFees.datasets[0].data[11];
-  const entryFeesMonthPrevious = props.entryFees.datasets[0].data[10];
-  const entryFeesTotal = props.entryFees.total;
+  const entryFeesMonthCurrent = parseInt(props.entryFees.datasets[0].data[11], 10);
+  const entryFeesMonthPrevious = parseInt(props.entryFees.datasets[0].data[10], 10);
+  const entryFeesTotal = props.entryFees.totalAmount;
 
   const doesEntryFeesGrowMonthly = entryFeesMonthCurrent > entryFeesMonthPrevious;
 
