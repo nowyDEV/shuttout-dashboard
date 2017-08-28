@@ -11,7 +11,7 @@ const TopMenu = (props: {
 }) => {
   const menuItems = [
     { id: 1, name: 'photoPanel', label: 'Photos Panel' },
-    { id: 2, name: 'baseStats', label: 'Base Stats' },
+    { id: 2, name: 'trafficStats', label: 'Traffic Stats' },
     { id: 3, name: 'photosChart', label: 'Photos Chart' },
     { id: 4, name: 'registeredUsers', label: 'Registered Users' },
     { id: 5, name: 'entryFees', label: 'Entry Fees' },

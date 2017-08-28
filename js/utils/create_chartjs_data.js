@@ -21,10 +21,11 @@ const createChartData = (inputData: {
         borderWidth: params.borderWidth || 1,
         borderColor: params.borderColor
       }
-    ]
+    ],
+    total: inputData.totalForAllResults
   };
 
-  if (params.months === true) {
+  if (params.month === true) {
     const months = [
       'January',
       'February',

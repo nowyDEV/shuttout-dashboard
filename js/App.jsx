@@ -7,26 +7,25 @@ import { Header, Loader } from 'semantic-ui-react';
 import { CLIENT_ID } from './config/api_credentials';
 import createChartData from './utils/create_chartjs_data';
 
-import browsersQuery from './api/gapi_calls/browsers';
-import devicesQuery from './api/gapi_calls/devices';
-import { visitorsDay, visitorsDayPrevious, visitorsMonth, visitorsMonthPrevious } from './api/gapi_calls/visitors';
-import {
-  activeUsersDay,
-  activeUsersDayPrevious,
-  activeUsersMonth,
-  activeUsersMonthPrevious
-} from './api/gapi_calls/active_users';
-import registrationsQuery from './api/gapi_calls/registrations';
+import { visitorsDay, visitorsMonth } from './api/gapi_calls/visitors';
+import { activeUsersDay, activeUsersMonth } from './api/gapi_calls/active_users';
+import { registrationsDay, registrationsMonth, registrationsTotal } from './api/gapi_calls/registrations';
 import bounceRate from './api/gapi_calls/bounce_rate';
 import exitRate from './api/gapi_calls/exit_rate';
 
 import entryFees from './api/shuttout_api_calls/entry_fees';
 import goldPayedOut from './api/shuttout_api_calls/gold_payed_out';
 import goldTotal from './api/shuttout_api_calls/gold_total';
-import photosPremium from './api/shuttout_api_calls/photos_premium';
-import photosTotal from './api/shuttout_api_calls/photos_total';
 import votesTotal from './api/shuttout_api_calls/votes_total';
-import { PhotoOfTheDay, PhotoBiggestPrize, PhotoLastUploaded } from './api/shuttout_api_calls/photos';
+import {
+  photoOfTheDay,
+  photoBiggestPrize,
+  photoLastUploaded,
+  photosPremiumDay,
+  photosPremiumMonth,
+  photosTotalDay,
+  photosTotalMonth
+} from './api/shuttout_api_calls/photos';
 
 import DisplayPanel from './DisplayPanel';
 
@@ -67,15 +66,17 @@ class App extends Component {
      * Make api call and update state
      */
     const shuttoutResponseData = {
-      entryFees: {},
       goldPayedOut: {},
       goldTotal: {},
-      photosPremium: {},
-      photosTotal: {},
       votesTotal: {},
+      photosPremiumMonth: {},
+      photosPremiumDay: {},
+      photosTotalMonth: {},
+      photosTotalDay: {},
       photoOfTheDay: {},
       photoLastUploaded: {},
-      photoBiggestPrize: {}
+      photoBiggestPrize: {},
+      entryFees: {}
     };
 
     Promise.all([
@@ -84,7 +85,7 @@ class App extends Component {
           label: 'Entry Fees',
           backgroundColor: 'rgba(0,0,102, 0.3)',
           borderColor: 'rgba(255, 99, 132, 0.95)',
-          months: true
+          month: true
         });
       }),
       goldPayedOut.then(response => {
@@ -92,7 +93,7 @@ class App extends Component {
           label: 'Money Payed Out',
           backgroundColor: 'rgba(0,51,51, 0.3)',
           borderColor: 'rgba(255, 99, 132, 0.95)',
-          months: true
+          month: true
         });
       }),
       goldTotal.then(response => {
@@ -100,42 +101,60 @@ class App extends Component {
           label: 'Total Money',
           backgroundColor: 'rgba(0,153,0, 0.3)',
           borderColor: 'rgba(255, 99, 132, 0.95)',
-          months: true
+          month: true
         });
       }),
-      photosPremium.then(response => {
-        shuttoutResponseData.photosPremium = createChartData(response.data[0], {
-          label: 'Premium Photos',
+      photosPremiumMonth.then(response => {
+        shuttoutResponseData.photosPremiumMonth = createChartData(response.data[0], {
+          label: 'Paid Entries Monthly',
           backgroundColor: 'rgba(0,153,204, 0.3)',
           borderColor: 'rgba(255, 99, 132, 0.95)',
-          months: true,
+          month: true,
           addTotal: true
         });
       }),
-      photosTotal.then(response => {
-        shuttoutResponseData.photosTotal = createChartData(response.data[0], {
-          label: 'Total Photos',
+      photosPremiumDay.then(response => {
+        shuttoutResponseData.photosPremiumDay = createChartData(response.data[0], {
+          label: 'Paid Entries Daily',
+          backgroundColor: 'rgba(0,153,204, 0.3)',
+          borderColor: 'rgba(255, 99, 132, 0.95)',
+          day: true,
+          addTotal: true
+        });
+      }),
+      photosTotalMonth.then(response => {
+        shuttoutResponseData.photosTotalMonth = createChartData(response.data[0], {
+          label: 'Total Photos Monthly',
           backgroundColor: 'rgba(204,204,0, 0.3)',
           borderColor: 'rgba(255, 99, 132, 0.95)',
-          months: true,
+          month: true,
+          addTotal: true
+        });
+      }),
+      photosTotalDay.then(response => {
+        shuttoutResponseData.photosTotalDay = createChartData(response.data[0], {
+          label: 'Total Photos Daily',
+          backgroundColor: 'rgba(204,204,0, 0.3)',
+          borderColor: 'rgba(255, 99, 132, 0.95)',
+          day: true,
           addTotal: true
         });
       }),
       votesTotal.then(response => {
         shuttoutResponseData.votesTotal = createChartData(response.data[0], {
-          label: 'Total Votes',
+          label: 'Total Votes ',
           backgroundColor: 'rgba(204,51,51, 0.3)',
           borderColor: 'rgba(255, 99, 132, 0.95)',
-          months: true
+          month: true
         });
       }),
-      PhotoOfTheDay.then(response => {
+      photoOfTheDay.then(response => {
         shuttoutResponseData.photoOfTheDay = response.data[0];
       }),
-      PhotoLastUploaded.then(response => {
+      photoLastUploaded.then(response => {
         shuttoutResponseData.photoLastUploaded = response.data[0];
       }),
-      PhotoBiggestPrize.then(response => {
+      photoBiggestPrize.then(response => {
         shuttoutResponseData.photoBiggestPrize = response.data[0];
       })
     ]).then(() => {
@@ -150,89 +169,91 @@ class App extends Component {
      * Make api call and update state
      */
     const responseData = {
-      browsers: {},
       visitorsMonth: 0,
       visitorsMonthPrevious: 0,
+      visitorsMonthly: {},
       visitorsDay: 0,
       visitorsDayPrevious: 0,
+      visitorsDaily: {},
       activeUsersMonth: 0,
       activeUsersMonthPrevious: 0,
+      activeUsersMonthly: {},
       activeUsersDay: 0,
       activeUsersDayPrevious: 0,
-      userDevice: {},
+      activeUsersDaily: {},
+      registrationsMonth: 0,
+      registrationsMonthPrevious: 0,
+      registrationsDay: 0,
+      registrationsDayPrevious: 0,
       visitorsMonthDay: {},
-      registeredUsers: {},
+      registeredTotalUsers: 0,
       exitRate: '',
       bounceRate: ''
     };
 
     Promise.all([
-      browsersQuery().then(response => {
-        responseData.browsers = createChartData(response, {
-          label: 'Browser popularity',
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.6)',
-            'rgba(54, 162, 235, 0.6)',
-            'rgba(255, 206, 86, 0.6)',
-            'rgba(75, 192, 192, 0.6)',
-            'rgba(153, 102, 255, 0.6)'
-          ]
-        });
-      }),
       visitorsMonth().then(response => {
-        responseData.visitorsMonth = parseInt(response.rows[0][0], 10);
-      }),
-      visitorsMonthPrevious().then(response => {
-        responseData.visitorsMonthPrevious = parseInt(response.rows[0][0], 10);
+        responseData.visitorsMonth = parseInt(response.rows[11][1], 10);
+        responseData.visitorsMonthPrevious = parseInt(response.rows[10][1], 10);
+        responseData.visitorsMonthly = createChartData(response, {
+          label: 'Visitors Monthly',
+          backgroundColor: ['rgba(255, 99, 132, 0.6)'],
+          month: true
+        });
       }),
       visitorsDay().then(response => {
-        console.log(response)
-        responseData.visitorsDay = parseInt(response.rows[0][0], 10);
-      }),
-      visitorsDayPrevious().then(response => {
-        responseData.visitorsDayPrevious = parseInt(response.rows[0][0], 10);
+        responseData.visitorsDay = parseInt(response.rows[5][1], 10);
+        responseData.visitorsDayPrevious = parseInt(response.rows[4][1], 10);
+        responseData.visitorsDaily = createChartData(response, {
+          label: 'Visitors Daily',
+          backgroundColor: ['rgba(255, 99, 132, 0.6)'],
+          day: true
+        });
       }),
       activeUsersMonth().then(response => {
-        responseData.activeUsersMonth = parseInt(response.rows[0][1], 10);
-      }),
-      activeUsersMonthPrevious().then(response => {
-        responseData.activeUsersMonthPrevious = parseInt(response.rows[0][1], 10);
+        responseData.activeUsersMonth = parseInt(response.rows[360][1], 10);
+        responseData.activeUsersMonthPrevious = parseInt(response.rows[330][1], 10);
+        responseData.activeUsersMonthly = createChartData(response, {
+          label: 'Active Users Monthly',
+          backgroundColor: ['rgba(255, 99, 132, 0.6)'],
+          month: true
+        });
       }),
       activeUsersDay().then(response => {
-        responseData.activeUsersDay = parseInt(response.rows[0][1], 10);
-      }),
-      activeUsersDayPrevious().then(response => {
-        responseData.activeUsersDayPrevious = parseInt(response.rows[0][1], 10);
-      }),
-      devicesQuery().then(response => {
-        responseData.userDevice = createChartData(response, {
-          label: 'Device popularity',
-          backgroundColor: ['rgba(255, 99, 132, 0.6)', 'rgba(54, 162, 235, 0.6)', 'rgba(255, 206, 86, 0.6)']
+        responseData.activeUsersDay = parseInt(response.rows[5][1], 10);
+        responseData.activeUsersDayPrevious = parseInt(response.rows[4][1], 10);
+        responseData.activeUsersDaily = createChartData(response, {
+          label: 'Active Users Daily',
+          backgroundColor: ['rgba(255, 99, 132, 0.6)'],
+          day: true
         });
+      }),
+      registrationsMonth().then(response => {
+        if (response.rows.length > 2) {
+          response.rows.shift();
+        }
+        responseData.registrationsMonth = parseInt(response.rows[1][1], 10);
+        responseData.registrationsMonthPrevious = parseInt(response.rows[0][1], 10);
+      }),
+      registrationsDay().then(response => {
+        responseData.registrationsDay = parseInt(response.rows[1][1], 10);
+        responseData.registrationsDayPrevious = parseInt(response.rows[0][1], 10);
+      }),
+      registrationsTotal().then(response => {
+        responseData.registeredTotalUsers = parseInt(response.rows[0][0], 10);
+      }),
+      exitRate().then(response => {
+        responseData.exitRate = response.rows[0][0];
+      }),
+      bounceRate().then(response => {
+        responseData.bounceRate = response.rows[0][0];
       })
-    ]).then(() =>
-      Promise.all([
-        registrationsQuery().then(response => {
-          responseData.registeredUsers = createChartData(response, {
-            label: 'Registered Users',
-            backgroundColor: 'rgba(255, 99, 132, 0.3)',
-            borderColor: 'rgba(255, 99, 132, 0.95)',
-            months: true
-          });
-        }),
-        exitRate().then(response => {
-          responseData.exitRate = response.rows[0][0];
-        }),
-        bounceRate().then(response => {
-          responseData.bounceRate = response.rows[0][0];
-        })
-      ]).then(() => {
-        this.setState({
-          apiLoaded: true,
-          googleData: responseData
-        });
-      })
-    );
+    ]).then(() => {
+      this.setState({
+        apiLoaded: true,
+        googleData: responseData
+      });
+    });
   }
 
   render() {

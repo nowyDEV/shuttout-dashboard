@@ -1,7 +1,7 @@
 const GridConfig = {
   layoutXLG: [
     { i: 'photoPanel', x: 1, y: 0, w: 7, h: 8 },
-    { i: 'baseStats', x: 8, y: 0, w: 7, h: 8 },
+    { i: 'trafficStats', x: 8, y: 0, w: 7, h: 8 },
     { i: 'photosChart', x: 1, y: 8, w: 4, h: 8 },
     { i: 'registeredUsers', x: 6, y: 8, w: 4, h: 8 },
     { i: 'entryFees', x: 11, y: 8, w: 4, h: 8 },
@@ -13,7 +13,7 @@ const GridConfig = {
   ],
   layoutLG: [
     { i: 'photoPanel', x: 0, y: 0, w: 6, h: 6 },
-    { i: 'baseStats', x: 6, y: 0, w: 6, h: 6 },
+    { i: 'trafficStats', x: 6, y: 0, w: 6, h: 6 },
     { i: 'photosChart', x: 0, y: 6, w: 3, h: 6 },
     { i: 'registeredUsers', x: 4, y: 6, w: 3, h: 6 },
     { i: 'entryFees', x: 8, y: 6, w: 3, h: 6 },
@@ -25,7 +25,7 @@ const GridConfig = {
   ],
   layoutMD: [
     { i: 'photoPanel', x: 0, y: 0, w: 5, h: 6 },
-    { i: 'baseStats', x: 5, y: 0, w: 5, h: 6 },
+    { i: 'trafficStats', x: 5, y: 0, w: 5, h: 6 },
     { i: 'photosChart', x: 0, y: 6, w: 5, h: 8 },
     { i: 'registeredUsers', x: 5, y: 6, w: 5, h: 8 },
     { i: 'entryFees', x: 0, y: 14, w: 5, h: 8 },
@@ -37,7 +37,7 @@ const GridConfig = {
   ],
   layoutSM: [
     { i: 'photoPanel', x: 0, y: 0, w: 5, h: 26 },
-    { i: 'baseStats', x: 0, y: 26, w: 5, h: 8 },
+    { i: 'trafficStats', x: 0, y: 26, w: 5, h: 8 },
     { i: 'photosChart', x: 0, y: 34, w: 5, h: 10 },
     { i: 'registeredUsers', x: 0, y: 45, w: 5, h: 10 },
     { i: 'entryFees', x: 0, y: 55, w: 5, h: 10 },
@@ -49,7 +49,7 @@ const GridConfig = {
   ],
   layoutXS: [
     { i: 'photoPanel', x: 0, y: 0, w: 5, h: 22 },
-    { i: 'baseStats', x: 0, y: 22, w: 5, h: 8 },
+    { i: 'trafficStats', x: 0, y: 22, w: 5, h: 8 },
     { i: 'photosChart', x: 0, y: 34, w: 5, h: 10 },
     { i: 'registeredUsers', x: 0, y: 45, w: 5, h: 10 },
     { i: 'entryFees', x: 0, y: 55, w: 5, h: 10 },
@@ -61,7 +61,7 @@ const GridConfig = {
   ],
   layoutXXS: [
     { i: 'photoPanel', x: 0, y: 0, w: 5, h: 14 },
-    { i: 'baseStats', x: 0, y: 14, w: 5, h: 8 },
+    { i: 'trafficStats', x: 0, y: 14, w: 5, h: 8 },
     { i: 'photosChart', x: 0, y: 22, w: 5, h: 6 },
     { i: 'registeredUsers', x: 0, y: 28, w: 5, h: 6 },
     { i: 'entryFees', x: 0, y: 34, w: 5, h: 6 },

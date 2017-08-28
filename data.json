@@ -1,7 +1,7 @@
 {
   "data": [
     {
-      "name": "photos_total",
+      "name": "photos_total_month",
       "startDate": "2016-08-01",
       "endDate": "2017-08-01",
       "rows": [
@@ -22,7 +22,23 @@
       "totalForAllResults": "1227"
     },
     {
-      "name": "photos_premium",
+      "name": "photos_total_day",
+      "startDate": "2017-07-22",
+      "endDate": "2017-08-01",
+      "rows": [
+        ["00", "10"],
+        ["01", "16"],
+        ["02", "12"],
+        ["03", "10"],
+        ["04", "12"],
+        ["05", "14"],
+        ["06", "20"]
+      ],
+      "totalResults": "7",
+      "totalForAllResults": "94"
+    },
+    {
+      "name": "photos_premium_month",
       "startDate": "2016-08-01",
       "endDate": "2017-08-01",
       "rows": [
@@ -41,6 +57,22 @@
       ],
       "totalResults": "12",
       "totalForAllResults": "619"
+    },
+    {
+      "name": "photos_premium_day",
+      "startDate": "2017-07-22",
+      "endDate": "2017-08-01",
+      "rows": [
+        ["00", "5"],
+        ["01", "8"],
+        ["02", "6"],
+        ["03", "5"],
+        ["04", "6"],
+        ["05", "7"],
+        ["06", "10"]
+      ],
+      "totalResults": "7",
+      "totalForAllResults": "47"
     },
     {
       "name": "votes_total",

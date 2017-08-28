@@ -1,34 +1,35 @@
 // @flow
 
 import React, { Component } from 'react';
-import { Container, Grid, Transition, Segment, Header, Icon, Divider } from 'semantic-ui-react';
+import { Container, Transition, Segment, Header, Icon, Divider } from 'semantic-ui-react';
 
 import TopMenu from './TopMenu';
 import PhotoPanel from './PhotoPanel';
-import BaseStats from './BaseStats';
+import PhotoStats from './PhotoStats';
+import TrafficStats from './TrafficStats';
 import AdditionalStats from './AdditionalStats';
-import PieChart from './PieChart';
-import DoughnutChart from './DoughnutChart';
-import HorizontalBarChart from './HorizontalBarChart';
-import MixedChart from './MixedChart';
+import PhotoChart from './PhotoChart';
 import BarChart from './BarChart';
+import TrafficChart from './TrafficChart';
+import MixedChart from './MixedChart';
 
 import '../node_modules/react-grid-layout/css/styles.css';
 import '../node_modules/react-resizable/css/styles.css';
+import BusinessStats from './BusinessStats'
 
 class DisplayPanel extends Component {
   state = {
     sidemenuVisible: false,
     activeItem: false,
     photoPanel: true,
-    baseStats: true,
+    photoStats: true,
+    trafficStats: true,
+    trafficChart: true,
     photosChart: true,
-    registeredUsers: true,
     entryFees: true,
     goldChart: true,
     totalVotes: true,
     newUsers: true,
-    deviceAndBrowser: true,
     additionalStats: true
   };
 
@@ -56,21 +57,7 @@ class DisplayPanel extends Component {
           handleCheckboxChange={this.handleCheckboxChange}
           handleMenuClick={this.handleMenuClick}
         />
-        <Container textAlign='center' style={{ marginTop: '5em' }}>
-          <Segment>
-            <div>
-              <Transition visible={this.state.photoPanel} animation="scale" duration={500}>
-                <div>
-                  <PhotoPanel
-                    lastUploadedData={shuttoutData.photoLastUploaded}
-                    ofTheDayData={shuttoutData.photoOfTheDay}
-                    biggestPrizeData={shuttoutData.photoBiggestPrize}
-                    unmountOnHide
-                  />
-                </div>
-              </Transition>
-            </div>
-          </Segment>
+        <Container textAlign="center" style={{ marginTop: '5em' }}>
           <Segment>
             <Header as="h2" icon textAlign="center">
               <Icon name="users" circular />
@@ -78,7 +65,7 @@ class DisplayPanel extends Component {
             </Header>
             <Transition visible={this.state.baseStats} animation="fade right" duration={500}>
               <div>
-                <BaseStats
+                <TrafficStats
                   visitorsMonth={data.visitorsMonth}
                   visitorsMonthPrevious={data.visitorsMonthPrevious}
                   visitorsDay={data.visitorsDay}
@@ -87,19 +74,23 @@ class DisplayPanel extends Component {
                   activeUsersMonthPrevious={data.activeUsersMonthPrevious}
                   activeUsersDay={data.activeUsersDay}
                   activeUsersDayPrevious={data.activeUsersDayPrevious}
+                  registrationsMonth={data.registrationsMonth}
+                  registrationsMonthPrevious={data.registrationsMonthPrevious}
+                  registrationsDay={data.registrationsDay}
+                  registrationsDayPrevious={data.registrationsDayPrevious}
+                  registeredTotalUsers={data.registeredTotalUsers}
                   unmountOnHide
                 />
                 <Divider />
               </div>
             </Transition>
-            <Transition visible={this.state.registeredUsers} animation="fade up" duration={500}>
+            <Transition visible={this.state.trafficChart} animation="fade left" duration={500}>
               <div>
-                <HorizontalBarChart
-                  customTitle={'Registered Users'}
-                  data={data.registeredUsers}
-                  legendPosition="bottom"
-                  displayLegend={false}
-                  displayTitle
+                <TrafficChart
+                  visitorsMonthly={data.visitorsMonthly}
+                  visitorsDaily={data.visitorsDaily}
+                  activeUsersMonthly={data.activeUsersMonthly}
+                  activeUsersDaily={data.activeUsersDaily}
                   unmountOnHide
                 />
                 <Divider />
@@ -112,9 +103,57 @@ class DisplayPanel extends Component {
               <Header.Content>Content</Header.Content>
             </Header>
             <div>
+              <Transition visible={this.state.photoPanel} animation="scale" duration={500}>
+                <div>
+                  <PhotoPanel
+                    lastUploadedData={shuttoutData.photoLastUploaded}
+                    ofTheDayData={shuttoutData.photoOfTheDay}
+                    biggestPrizeData={shuttoutData.photoBiggestPrize}
+                    unmountOnHide
+                  />
+                </div>
+              </Transition>
+            </div>
+            <Divider />
+            <div>
+              <Transition visible={this.state.photoStats} animation="fade down" duration={500}>
+                <div>
+                  <PhotoStats
+                    photosTotalMonth={shuttoutData.photosTotalMonth}
+                    photosTotalDay={shuttoutData.photosTotalDay}
+                    photosPremiumMonth={shuttoutData.photosPremiumMonth}
+                    photosPremiumDay={shuttoutData.photosPremiumDay}
+                    unmountOnHide
+                  />
+                </div>
+              </Transition>
+            </div>
+            <Divider />
+            <div>
               <Transition visible={this.state.photosChart} animation="fade down" duration={500}>
                 <div>
-                  <MixedChart dataOne={shuttoutData.photosTotal} dataTwo={shuttoutData.photosPremium} unmountOnHide />
+                  <PhotoChart
+                    photosTotalMonth={shuttoutData.photosTotalMonth}
+                    photosTotalDay={shuttoutData.photosTotalDay}
+                    photosPremiumMonth={shuttoutData.photosPremiumMonth}
+                    photosPremiumDay={shuttoutData.photosPremiumDay}
+                    unmountOnHide
+                  />
+                </div>
+              </Transition>
+            </div>
+            <Divider />
+            <div>
+              <Transition visible={this.state.totalVotes} animation="fade down" duration={500}>
+                <div>
+                  <BarChart
+                    customTitle={'Total Votes'}
+                    data={shuttoutData.votesTotal}
+                    legendPosition="bottom"
+                    displayLegend={false}
+                    displayTitle
+                    unmountOnHide
+                  />
                 </div>
               </Transition>
             </div>
@@ -124,59 +163,14 @@ class DisplayPanel extends Component {
               <Icon name="money" circular />
               <Header.Content>Business</Header.Content>
             </Header>
+            <div>
+              <BusinessStats entryFees={shuttoutData.entryFees} />
+            </div>
           </Segment>
-          <div>
-            <Transition visible={this.state.entryFees} animation="fade down" duration={500}>
-              <div>
-                <BarChart
-                  customTitle={'Entry Fees'}
-                  data={shuttoutData.entryFees}
-                  legendPosition="bottom"
-                  displayLegend={false}
-                  displayTitle
-                  unmountOnHide
-                />
-              </div>
-            </Transition>
-          </div>
           <div>
             <Transition visible={this.state.goldChart} animation="fade up" duration={500}>
               <div>
                 <MixedChart dataOne={shuttoutData.goldTotal} dataTwo={shuttoutData.goldPayedOut} unmountOnHide />
-              </div>
-            </Transition>
-          </div>
-          <div>
-            <Transition visible={this.state.totalVotes} animation="fade down" duration={500}>
-              <div>
-                <BarChart
-                  customTitle={'Total Votes'}
-                  data={shuttoutData.votesTotal}
-                  legendPosition="bottom"
-                  displayLegend={false}
-                  displayTitle
-                  unmountOnHide
-                />
-              </div>
-            </Transition>
-          </div>
-          <div>
-            <Transition visible={this.state.deviceAndBrowser} animation="scale" duration={500}>
-              <div>
-                <Grid doubling columns={2}>
-                  <Grid.Column>
-                    <DoughnutChart
-                      data={data.userDevice}
-                      legendPosition="bottom"
-                      displayLegend
-                      displayTitle
-                      unmountOnHide
-                    />
-                  </Grid.Column>
-                  <Grid.Column>
-                    <PieChart data={data.browsers} legendPosition="bottom" displayLegend displayTitle unmountOnHide />
-                  </Grid.Column>
-                </Grid>
               </div>
             </Transition>
           </div>
