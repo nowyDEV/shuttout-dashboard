@@ -1,14 +1,14 @@
 // @flow
 
-import React from 'react';
-import { Doughnut } from 'react-chartjs-2';
+import React from 'react'
+import { Doughnut } from 'react-chartjs-2'
 
 const DoughnutChart = (props: {
   data: ChartjsData,
   displayTitle: boolean,
   displayLegend: boolean,
   legendPosition: string
-}) =>
+}) => (
   <div>
     <Doughnut
       data={props.data}
@@ -26,6 +26,7 @@ const DoughnutChart = (props: {
         maintainAspectRatio: true
       }}
     />
-  </div>;
+  </div>
+)
 
-export default DoughnutChart;
+export default DoughnutChart

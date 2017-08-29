@@ -1,7 +1,7 @@
 // @flow
 
-import React from 'react';
-import { HorizontalBar } from 'react-chartjs-2';
+import React from 'react'
+import { HorizontalBar } from 'react-chartjs-2'
 
 const HorizontalBarChart = (props: {
   data: ChartjsData,
@@ -9,7 +9,7 @@ const HorizontalBarChart = (props: {
   displayLegend: boolean,
   legendPosition: string,
   customTitle: string
-}) =>
+}) => (
   <div>
     <HorizontalBar
       data={props.data}
@@ -27,6 +27,7 @@ const HorizontalBarChart = (props: {
         maintainAspectRatio: true
       }}
     />
-  </div>;
+  </div>
+)
 
-export default HorizontalBarChart;
+export default HorizontalBarChart

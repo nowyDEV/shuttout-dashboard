@@ -1,19 +1,17 @@
 // @flow
 
-import React from 'react';
-import { Statistic, Icon, Label, Segment, Grid } from 'semantic-ui-react';
+import React from 'react'
+import { Statistic, Icon, Label, Segment, Grid } from 'semantic-ui-react'
 
-const BusinessStats = (props: {
-  entryFees: ChartjsData
-}) => {
-  const entryFeesMonthCurrent = parseInt(props.entryFees.datasets[0].data[11], 10);
-  const entryFeesMonthPrevious = parseInt(props.entryFees.datasets[0].data[10], 10);
-  const entryFeesTotal = props.entryFees.totalAmount;
+const BusinessStats = (props: { entryFees: ChartjsData }) => {
+  const entryFeesMonthCurrent = parseInt(props.entryFees.datasets[0].data[11], 10)
+  const entryFeesMonthPrevious = parseInt(props.entryFees.datasets[0].data[10], 10)
+  const entryFeesTotal = parseInt(props.entryFees.totalAmount, 10)
 
-  const doesEntryFeesGrowMonthly = entryFeesMonthCurrent > entryFeesMonthPrevious;
+  const doesEntryFeesGrowMonthly = entryFeesMonthCurrent > entryFeesMonthPrevious
 
   const entryFeesGrowMonthlyPercent =
-    Math.round((1 - entryFeesMonthPrevious / entryFeesMonthCurrent + 0.00001) * 1000) / 10;
+    Math.round((1 - entryFeesMonthPrevious / entryFeesMonthCurrent + 0.00001) * 1000) / 10
 
   return (
     <Grid stackable>
@@ -25,9 +23,7 @@ const BusinessStats = (props: {
               {`${entryFeesGrowMonthlyPercent}%`}
             </Label>
             <Statistic size="tiny">
-              <Statistic.Value>
-                {entryFeesMonthCurrent}
-              </Statistic.Value>
+              <Statistic.Value>{entryFeesMonthCurrent}</Statistic.Value>
               <Statistic.Label>Entry Fees Monthly</Statistic.Label>
             </Statistic>
           </Segment>
@@ -35,16 +31,14 @@ const BusinessStats = (props: {
         <Grid.Column>
           <Segment textAlign="center">
             <Statistic size="tiny">
-              <Statistic.Value>
-                {entryFeesTotal}
-              </Statistic.Value>
+              <Statistic.Value>{entryFeesTotal}</Statistic.Value>
               <Statistic.Label>Total Entry Fees</Statistic.Label>
             </Statistic>
           </Segment>
         </Grid.Column>
       </Grid.Row>
     </Grid>
-  );
-};
+  )
+}
 
-export default BusinessStats;
+export default BusinessStats

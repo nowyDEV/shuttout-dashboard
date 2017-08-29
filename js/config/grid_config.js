@@ -73,4 +73,4 @@ const GridConfig = {
   ]
 }
 
-export default GridConfig;
+export default GridConfig

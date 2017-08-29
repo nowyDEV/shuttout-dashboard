@@ -1,7 +1,7 @@
 // @flow
 
-import React from 'react';
-import { Bar } from 'react-chartjs-2';
+import React from 'react'
+import { Bar } from 'react-chartjs-2'
 
 const BarChart = (props: {
   data: ChartjsData,
@@ -9,7 +9,7 @@ const BarChart = (props: {
   displayLegend: boolean,
   legendPosition: string,
   customTitle: string
-}) =>
+}) => (
   <div>
     <Bar
       data={props.data}
@@ -27,6 +27,7 @@ const BarChart = (props: {
         maintainAspectRatio: true
       }}
     />
-  </div>;
+  </div>
+)
 
-export default BarChart;
+export default BarChart

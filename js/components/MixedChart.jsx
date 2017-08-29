@@ -1,7 +1,7 @@
 // @flow
 
-import React from 'react';
-import { Bar } from 'react-chartjs-2';
+import React from 'react'
+import { Bar } from 'react-chartjs-2'
 
 const MixedChart = (props: { dataOne: ChartjsData, dataTwo: ChartjsData }) => {
   const data = {
@@ -32,7 +32,7 @@ const MixedChart = (props: { dataOne: ChartjsData, dataTwo: ChartjsData }) => {
         yAxisID: 'y-axis-1'
       }
     ]
-  };
+  }
   const options = {
     responsive: true,
     tooltips: {
@@ -82,13 +82,13 @@ const MixedChart = (props: { dataOne: ChartjsData, dataTwo: ChartjsData }) => {
         }
       ]
     }
-  };
+  }
 
   return (
     <div>
       <Bar data={data} options={options} />
     </div>
-  );
-};
+  )
+}
 
-export default MixedChart;
+export default MixedChart

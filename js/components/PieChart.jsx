@@ -1,14 +1,14 @@
 // @flow
 
-import React from 'react';
-import { Pie } from 'react-chartjs-2';
+import React from 'react'
+import { Pie } from 'react-chartjs-2'
 
 const PieChart = (props: {
   data: ChartjsData,
   displayTitle: boolean,
   displayLegend: boolean,
   legendPosition: string
-}) =>
+}) => (
   <div>
     <Pie
       data={props.data}
@@ -26,6 +26,7 @@ const PieChart = (props: {
         maintainAspectRatio: true
       }}
     />
-  </div>;
+  </div>
+)
 
-export default PieChart;
+export default PieChart

@@ -1,14 +1,14 @@
 // @flow
 
-import React from 'react';
-import { Line } from 'react-chartjs-2';
+import React from 'react'
+import { Line } from 'react-chartjs-2'
 
 const LineChart = (props: {
   data: ChartjsData,
   displayTitle: boolean,
   displayLegend: boolean,
   legendPosition: string
-}) =>
+}) => (
   <div>
     <Line
       data={props.data}
@@ -26,6 +26,7 @@ const LineChart = (props: {
         maintainAspectRatio: true
       }}
     />
-  </div>;
+  </div>
+)
 
-export default LineChart;
+export default LineChart

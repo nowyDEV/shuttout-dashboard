@@ -1,16 +1,19 @@
 // @flow
 
-const createChartData = (inputData: {
-  [string]: any
-}, params: {
-  label: string,
-  backgroundColor: string | Array<string>,
-  borderColor?: string,
-  borderWidth?: number,
-  month?: boolean,
-  day?: boolean,
-  addTotal?: boolean
-}) => {
+const createChartData = (
+  inputData: {
+    [string]: any
+  },
+  params: {
+    label: string,
+    backgroundColor: string | Array<string>,
+    borderColor?: string,
+    borderWidth?: number,
+    month?: boolean,
+    day?: boolean,
+    addTotal?: boolean
+  }
+) => {
   const outputData = {
     labels: [],
     datasets: [
@@ -23,7 +26,7 @@ const createChartData = (inputData: {
       }
     ],
     totalAmount: inputData.totalForAllResults
-  };
+  }
 
   if (params.month === true) {
     const months = [
@@ -39,30 +42,28 @@ const createChartData = (inputData: {
       'October',
       'November',
       'December'
-    ];
+    ]
     inputData.rows.forEach(row => {
-      outputData.datasets[0].data.push(+row[1]);
-      outputData.labels.push(months[parseInt(row[0], 10) - 1]);
-    });
-
+      outputData.datasets[0].data.push(+row[1])
+      outputData.labels.push(months[parseInt(row[0], 10) - 1])
+    })
   } else if (params.day === true) {
     inputData.rows.forEach(row => {
-      outputData.datasets[0].data.push(+row[1]);
-      outputData.labels.push(row[0]);
-    });
-
+      outputData.datasets[0].data.push(+row[1])
+      outputData.labels.push(row[0])
+    })
   } else {
     inputData.rows.forEach(row => {
-      outputData.datasets[0].data.push(+row[1]);
-      outputData.labels.push(row[0]);
-    });
+      outputData.datasets[0].data.push(+row[1])
+      outputData.labels.push(row[0])
+    })
   }
 
   if (params.addTotal === true) {
-    (outputData: Object).totalAmount = parseInt(inputData.totalForAllResults, 10);
+    ;(outputData: Object).totalAmount = parseInt(inputData.totalForAllResults, 10)
   }
 
-  return outputData;
-};
+  return outputData
+}
 
-export default createChartData;
+export default createChartData

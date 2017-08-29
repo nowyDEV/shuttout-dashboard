@@ -32,13 +32,13 @@ export type apiData = {
   photoOfTheDay: ShuttoutPhoto,
   photoLastUploaded: ShuttoutPhoto,
   photoBiggestPrize: ShuttoutPhoto
-};
+}
 
 export type ChartjsData = {
   datasets: Array<ChartjsDatasets>,
   labels: Array<string>,
   totalAmount: number
-};
+}
 
 export type ChartjsDatasets = {
   backgroundColor: Array<string>,
@@ -46,7 +46,7 @@ export type ChartjsDatasets = {
   borderWidth: number,
   label: string,
   meta: Object
-};
+}
 
 export type ShuttoutPhoto = {
   data: {
@@ -55,4 +55,4 @@ export type ShuttoutPhoto = {
     votes?: string
   },
   name: string
-};
+}

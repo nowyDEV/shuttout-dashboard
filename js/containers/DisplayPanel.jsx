@@ -1,21 +1,21 @@
 // @flow
 
-import React, { Component } from 'react';
-import { Container, Transition, Segment, Header, Icon, Divider } from 'semantic-ui-react';
+import React, { Component } from 'react'
+import { Container, Transition, Segment, Header, Icon, Divider } from 'semantic-ui-react'
 
-import TopMenu from '../components/TopMenu';
-import PhotoPanel from '../components/Content/PhotoPanel';
-import PhotoStats from '../components/Content/PhotoStats';
-import TrafficStats from '../components/Traffic/TrafficStats';
-import AdditionalStats from '../components/AdditionalStats';
-import PhotoChart from '../components/Content/PhotoChart';
-import BarChart from '../components/BarChart';
-import TrafficChart from '../components/Traffic/TrafficChart';
-import MixedChart from '../components/MixedChart';
-import BusinessStats from '../components/Business/BusinessStats';
+import TopMenu from '../components/TopMenu'
+import PhotoPanel from '../components/Content/PhotoPanel'
+import PhotoStats from '../components/Content/PhotoStats'
+import TrafficStats from '../components/Traffic/TrafficStats'
+import AdditionalStats from '../components/Optional/AdditionalStats'
+import PhotoChart from '../components/Content/PhotoChart'
+import BarChart from '../components/BarChart'
+import TrafficChart from '../components/Traffic/TrafficChart'
+import MixedChart from '../components/MixedChart'
+import BusinessStats from '../components/Business/BusinessStats'
 
-import '../../node_modules/react-grid-layout/css/styles.css';
-import '../../node_modules/react-resizable/css/styles.css';
+import '../../node_modules/react-grid-layout/css/styles.css'
+import '../../node_modules/react-resizable/css/styles.css'
 
 class DisplayPanel extends Component {
   state = {
@@ -31,23 +31,23 @@ class DisplayPanel extends Component {
     totalVotes: true,
     newUsers: true,
     additionalStats: true
-  };
+  }
 
-  props: { data: apiData, shuttoutData: apiData };
+  props: { data: apiData, shuttoutData: apiData }
 
   handleCheckboxChange = (event: Event, data: Object) => {
-    this.setState({ [data.name]: data.checked });
-  };
+    this.setState({ [data.name]: data.checked })
+  }
 
   handleMenuClick = () => {
     this.setState({
       activeItem: !this.state.activeItem,
       sidemenuVisible: !this.state.sidemenuVisible
-    });
-  };
+    })
+  }
 
   render() {
-    const { data, shuttoutData } = this.props;
+    const { data, shuttoutData } = this.props
 
     return (
       <div>
@@ -187,8 +187,8 @@ class DisplayPanel extends Component {
           </div>
         </Container>
       </div>
-    );
+    )
   }
 }
 
-export default DisplayPanel;
+export default DisplayPanel

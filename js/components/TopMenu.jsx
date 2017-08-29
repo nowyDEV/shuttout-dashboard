@@ -1,7 +1,7 @@
 // @flow
 
-import React from 'react';
-import { Container, Image, Menu, Sidebar, Checkbox } from 'semantic-ui-react';
+import React from 'react'
+import { Container, Image, Menu, Sidebar, Checkbox } from 'semantic-ui-react'
 
 const TopMenu = (props: {
   activeItem: boolean,
@@ -20,7 +20,7 @@ const TopMenu = (props: {
     { id: 8, name: 'newUsers', label: 'New Users' },
     { id: 9, name: 'deviceAndBrowser', label: 'Device / Browser' },
     { id: 10, name: 'additionalStats', label: 'Additional Stats' }
-  ];
+  ]
   return (
     <div>
       <Menu fixed="top" inverted>
@@ -43,21 +43,15 @@ const TopMenu = (props: {
         icon="labeled"
         vertical
         inverted
-        direction="right"
-      >
-        {menuItems.map(item =>
+        direction="right">
+        {menuItems.map(item => (
           <Menu.Item key={item.id}>
-            <Checkbox
-              name={item.name}
-              label={item.label}
-              onChange={props.handleCheckboxChange}
-              defaultChecked
-            />
+            <Checkbox name={item.name} label={item.label} onChange={props.handleCheckboxChange} defaultChecked />
           </Menu.Item>
-        )};
+        ))};
       </Sidebar>
     </div>
-  );
-};
+  )
+}
 
-export default TopMenu;
+export default TopMenu

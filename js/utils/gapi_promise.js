@@ -18,17 +18,17 @@ function apiQuery(params: {
     setTimeout(() => {
       /* global gapi */
       // $FlowFixMe
-      const data = new gapi.analytics.report.Data({ query: params });
+      const data = new gapi.analytics.report.Data({ query: params })
       data
         .once('success', response => {
-          resolve(response);
+          resolve(response)
         })
         .once('error', response => {
-          reject(response);
+          reject(response)
         })
-        .execute();
-    }, 2000);
-  });
+        .execute()
+    }, 2000)
+  })
 }
 
-export default apiQuery;
+export default apiQuery
