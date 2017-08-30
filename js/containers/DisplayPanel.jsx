@@ -26,8 +26,9 @@ class DisplayPanel extends Component {
     trafficChart: true,
     photoPanel: true,
     photoStats: true,
-    photosChart: true,
+    photoChart: true,
     totalVotes: true,
+    businessStats: true,
     goldChart: true,
     additionalStats: true
   }
@@ -80,21 +81,16 @@ class DisplayPanel extends Component {
                   registeredTotalUsers={data.registeredTotalUsers}
                   unmountOnHide
                 />
-                <Divider />
               </div>
             </Transition>
-            <Transition visible={this.state.trafficChart} animation="fade left" duration={500}>
-              <div>
-                <TrafficChart
-                  visitorsMonthly={data.visitorsMonthly}
-                  visitorsDaily={data.visitorsDaily}
-                  activeUsersMonthly={data.activeUsersMonthly}
-                  activeUsersDaily={data.activeUsersDaily}
-                  unmountOnHide
-                />
-                <Divider />
-              </div>
-            </Transition>
+            <TrafficChart
+              visitorsMonthly={data.visitorsMonthly}
+              visitorsDaily={data.visitorsDaily}
+              activeUsersMonthly={data.activeUsersMonthly}
+              activeUsersDaily={data.activeUsersDaily}
+              visible={this.state.trafficChart}
+              unmountOnHide
+            />
           </Segment>
           <Segment>
             <Header as="h2" icon textAlign="center">
@@ -102,21 +98,18 @@ class DisplayPanel extends Component {
               <Header.Content>Content</Header.Content>
             </Header>
             <div>
-              <Transition visible={this.state.photoPanel} animation="scale" duration={500}>
-                <div>
-                  <PhotoPanel
-                    lastUploadedData={shuttoutData.photoLastUploaded}
-                    ofTheDayData={shuttoutData.photoOfTheDay}
-                    biggestPrizeData={shuttoutData.photoBiggestPrize}
-                    unmountOnHide
-                  />
-                </div>
-              </Transition>
+              <PhotoPanel
+                lastUploadedData={shuttoutData.photoLastUploaded}
+                ofTheDayData={shuttoutData.photoOfTheDay}
+                biggestPrizeData={shuttoutData.photoBiggestPrize}
+                visible={this.state.photoPanel}
+                unmountOnHide
+              />
             </div>
-            <Divider />
             <div>
               <Transition visible={this.state.photoStats} animation="fade down" duration={500}>
                 <div>
+                  <Divider />
                   <PhotoStats
                     photosTotalMonth={shuttoutData.photosTotalMonth}
                     photosTotalDay={shuttoutData.photosTotalDay}
@@ -127,24 +120,18 @@ class DisplayPanel extends Component {
                 </div>
               </Transition>
             </div>
-            <Divider />
-            <div>
-              <Transition visible={this.state.photosChart} animation="fade down" duration={500}>
-                <div>
-                  <PhotoChart
-                    photosTotalMonth={shuttoutData.photosTotalMonth}
-                    photosTotalDay={shuttoutData.photosTotalDay}
-                    photosPremiumMonth={shuttoutData.photosPremiumMonth}
-                    photosPremiumDay={shuttoutData.photosPremiumDay}
-                    unmountOnHide
-                  />
-                </div>
-              </Transition>
-            </div>
-            <Divider />
+            <PhotoChart
+              photosTotalMonth={shuttoutData.photosTotalMonth}
+              photosTotalDay={shuttoutData.photosTotalDay}
+              photosPremiumMonth={shuttoutData.photosPremiumMonth}
+              photosPremiumDay={shuttoutData.photosPremiumDay}
+              visible={this.state.photoChart}
+              unmountOnHide
+            />
             <div>
               <Transition visible={this.state.totalVotes} animation="fade down" duration={500}>
                 <div>
+                  <Divider />
                   <BarChart
                     customTitle={'Total Votes'}
                     data={shuttoutData.votesTotal}
@@ -163,7 +150,11 @@ class DisplayPanel extends Component {
               <Header.Content>Business</Header.Content>
             </Header>
             <div>
-              <BusinessStats entryFees={shuttoutData.entryFees} />
+              <Transition visible={this.state.businessStats} animation="fade up" duration={500}>
+                <div>
+                  <BusinessStats entryFees={shuttoutData.entryFees} />
+                </div>
+              </Transition>
             </div>
           </Segment>
           <div>

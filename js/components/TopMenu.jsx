@@ -9,17 +9,20 @@ const TopMenu = (props: {
   handleCheckboxChange: (param1: Event, param2: Object) => void,
   handleMenuClick: () => void
 }) => {
-  const menuItems = [
-    { id: 1, name: 'photoPanel', label: 'Photos Panel' },
-    { id: 2, name: 'trafficStats', label: 'Traffic Stats' },
-    { id: 3, name: 'photosChart', label: 'Photos Chart' },
-    { id: 4, name: 'registeredUsers', label: 'Registered Users' },
-    { id: 5, name: 'entryFees', label: 'Entry Fees' },
-    { id: 6, name: 'goldChart', label: 'Gold Chart' },
-    { id: 7, name: 'totalVotes', label: 'Total Votes' },
-    { id: 8, name: 'newUsers', label: 'New Users' },
-    { id: 9, name: 'deviceAndBrowser', label: 'Device / Browser' },
-    { id: 10, name: 'additionalStats', label: 'Additional Stats' }
+  const menuItems: Array<{
+    id: number,
+    name: string,
+    label: string
+  }> = [
+    { id: 1, name: 'trafficStats', label: 'Traffic Stats' },
+    { id: 2, name: 'trafficChart', label: 'Registrations' },
+    { id: 3, name: 'photoPanel', label: 'Photos Panel' },
+    { id: 4, name: 'photoStats', label: 'Photos Stats' },
+    { id: 5, name: 'photoChart', label: 'Photos Chart' },
+    { id: 6, name: 'totalVotes', label: 'Total Votes' },
+    { id: 7, name: 'businessStats', label: 'Business Stats' },
+    { id: 8, name: 'goldChart', label: 'Gold Chart' },
+    { id: 9, name: 'additionalStats', label: 'Additional Stats' }
   ]
   return (
     <div>
