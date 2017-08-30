@@ -50,7 +50,7 @@ const createChartData = (
   } else if (params.day === true) {
     inputData.rows.forEach(row => {
       outputData.datasets[0].data.push(+row[1])
-      outputData.labels.push(row[0])
+      outputData.labels.push(parseInt(row[0], 10) + 1)
     })
   } else {
     inputData.rows.forEach(row => {
@@ -60,7 +60,7 @@ const createChartData = (
   }
 
   if (params.addTotal === true) {
-    ;(outputData: Object).totalAmount = parseInt(inputData.totalForAllResults, 10)
+    (outputData: Object).totalAmount = parseInt(inputData.totalForAllResults, 10)
   }
 
   return outputData

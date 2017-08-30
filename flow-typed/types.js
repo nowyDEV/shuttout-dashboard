@@ -1,6 +1,6 @@
 // @flow
 
-export type apiData = {
+export type GoogleData = {
   visitorsMonth: number,
   visitorsMonthPrevious: number,
   visitorsMonthly: ChartjsData,
@@ -21,6 +21,9 @@ export type apiData = {
   registeredTotalUsers: number,
   exitRate: string,
   bounceRate: string,
+}
+
+export type ShuttoutData = {
   entryFees: ChartjsData,
   goldPayedOut: ChartjsData,
   goldTotal: ChartjsData,

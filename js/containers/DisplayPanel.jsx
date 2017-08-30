@@ -18,22 +18,21 @@ import '../../node_modules/react-grid-layout/css/styles.css'
 import '../../node_modules/react-resizable/css/styles.css'
 
 class DisplayPanel extends Component {
-  state = {
+  state: {
+    [string]: boolean
+  } = {
     sidemenuVisible: false,
-    activeItem: false,
-    photoPanel: true,
-    photoStats: true,
     trafficStats: true,
     trafficChart: true,
+    photoPanel: true,
+    photoStats: true,
     photosChart: true,
-    entryFees: true,
-    goldChart: true,
     totalVotes: true,
-    newUsers: true,
+    goldChart: true,
     additionalStats: true
   }
 
-  props: { data: apiData, shuttoutData: apiData }
+  props: { data: GoogleData, shuttoutData: ShuttoutData }
 
   handleCheckboxChange = (event: Event, data: Object) => {
     this.setState({ [data.name]: data.checked })

@@ -29,7 +29,11 @@ import {
 import DisplayPanel from './DisplayPanel'
 
 class App extends Component {
-  state = {
+  state: {
+    apiLoaded: boolean,
+    googleData: Object,
+    shuttoutData: Object
+  } = {
     apiLoaded: false,
     googleData: {},
     shuttoutData: {}
@@ -64,19 +68,7 @@ class App extends Component {
     /**
      * Make api call and update state
      */
-    const shuttoutResponseData = {
-      goldPayedOut: {},
-      goldTotal: {},
-      votesTotal: {},
-      photosPremiumMonth: {},
-      photosPremiumDay: {},
-      photosTotalMonth: {},
-      photosTotalDay: {},
-      photoOfTheDay: {},
-      photoLastUploaded: {},
-      photoBiggestPrize: {},
-      entryFees: {}
-    }
+    const shuttoutResponseData = {}
 
     Promise.all([
       entryFees.then(response => {
@@ -167,61 +159,40 @@ class App extends Component {
     /**
      * Make api call and update state
      */
-    const responseData = {
-      visitorsMonth: 0,
-      visitorsMonthPrevious: 0,
-      visitorsMonthly: {},
-      visitorsDay: 0,
-      visitorsDayPrevious: 0,
-      visitorsDaily: {},
-      activeUsersMonth: 0,
-      activeUsersMonthPrevious: 0,
-      activeUsersMonthly: {},
-      activeUsersDay: 0,
-      activeUsersDayPrevious: 0,
-      activeUsersDaily: {},
-      registrationsMonth: 0,
-      registrationsMonthPrevious: 0,
-      registrationsDay: 0,
-      registrationsDayPrevious: 0,
-      visitorsMonthDay: {},
-      registeredTotalUsers: 0,
-      exitRate: '',
-      bounceRate: ''
-    }
+    const googleResponseData = {}
 
     Promise.all([
       visitorsMonth().then(response => {
-        responseData.visitorsMonth = parseInt(response.rows[11][1], 10)
-        responseData.visitorsMonthPrevious = parseInt(response.rows[10][1], 10)
-        responseData.visitorsMonthly = createChartData(response, {
+        googleResponseData.visitorsMonth = parseInt(response.rows[11][1], 10)
+        googleResponseData.visitorsMonthPrevious = parseInt(response.rows[10][1], 10)
+        googleResponseData.visitorsMonthly = createChartData(response, {
           label: 'Visitors Monthly',
           backgroundColor: ['rgba(255, 99, 132, 0.6)'],
           month: true
         })
       }),
       visitorsDay().then(response => {
-        responseData.visitorsDay = parseInt(response.rows[5][1], 10)
-        responseData.visitorsDayPrevious = parseInt(response.rows[4][1], 10)
-        responseData.visitorsDaily = createChartData(response, {
+        googleResponseData.visitorsDay = parseInt(response.rows[5][1], 10)
+        googleResponseData.visitorsDayPrevious = parseInt(response.rows[4][1], 10)
+        googleResponseData.visitorsDaily = createChartData(response, {
           label: 'Visitors Daily',
           backgroundColor: ['rgba(255, 99, 132, 0.6)'],
           day: true
         })
       }),
       activeUsersMonth().then(response => {
-        responseData.activeUsersMonth = parseInt(response.rows[360][1], 10)
-        responseData.activeUsersMonthPrevious = parseInt(response.rows[330][1], 10)
-        responseData.activeUsersMonthly = createChartData(response, {
+        googleResponseData.activeUsersMonth = parseInt(response.rows[360][1], 10)
+        googleResponseData.activeUsersMonthPrevious = parseInt(response.rows[330][1], 10)
+        googleResponseData.activeUsersMonthly = createChartData(response, {
           label: 'Active Users Monthly',
           backgroundColor: ['rgba(255, 99, 132, 0.6)'],
           month: true
         })
       }),
       activeUsersDay().then(response => {
-        responseData.activeUsersDay = parseInt(response.rows[5][1], 10)
-        responseData.activeUsersDayPrevious = parseInt(response.rows[4][1], 10)
-        responseData.activeUsersDaily = createChartData(response, {
+        googleResponseData.activeUsersDay = parseInt(response.rows[5][1], 10)
+        googleResponseData.activeUsersDayPrevious = parseInt(response.rows[4][1], 10)
+        googleResponseData.activeUsersDaily = createChartData(response, {
           label: 'Active Users Daily',
           backgroundColor: ['rgba(255, 99, 132, 0.6)'],
           day: true
@@ -231,26 +202,26 @@ class App extends Component {
         if (response.rows.length > 2) {
           response.rows.shift()
         }
-        responseData.registrationsMonth = parseInt(response.rows[1][1], 10)
-        responseData.registrationsMonthPrevious = parseInt(response.rows[0][1], 10)
+        googleResponseData.registrationsMonth = parseInt(response.rows[1][1], 10)
+        googleResponseData.registrationsMonthPrevious = parseInt(response.rows[0][1], 10)
       }),
       registrationsDay().then(response => {
-        responseData.registrationsDay = parseInt(response.rows[1][1], 10)
-        responseData.registrationsDayPrevious = parseInt(response.rows[0][1], 10)
+        googleResponseData.registrationsDay = parseInt(response.rows[1][1], 10)
+        googleResponseData.registrationsDayPrevious = parseInt(response.rows[0][1], 10)
       }),
       registrationsTotal().then(response => {
-        responseData.registeredTotalUsers = parseInt(response.rows[0][0], 10)
+        googleResponseData.registeredTotalUsers = parseInt(response.rows[0][0], 10)
       }),
       exitRate().then(response => {
-        responseData.exitRate = response.rows[0][0]
+        googleResponseData.exitRate = response.rows[0][0]
       }),
       bounceRate().then(response => {
-        responseData.bounceRate = response.rows[0][0]
+        googleResponseData.bounceRate = response.rows[0][0]
       })
     ]).then(() => {
       this.setState({
         apiLoaded: true,
-        googleData: responseData
+        googleData: googleResponseData
       })
     })
   }
