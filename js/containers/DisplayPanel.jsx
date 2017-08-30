@@ -97,29 +97,25 @@ class DisplayPanel extends Component {
               <Icon name="photo" circular />
               <Header.Content>Content</Header.Content>
             </Header>
-            <div>
-              <PhotoPanel
-                lastUploadedData={shuttoutData.photoLastUploaded}
-                ofTheDayData={shuttoutData.photoOfTheDay}
-                biggestPrizeData={shuttoutData.photoBiggestPrize}
-                visible={this.state.photoPanel}
-                unmountOnHide
-              />
-            </div>
-            <div>
-              <Transition visible={this.state.photoStats} animation="fade down" duration={500}>
-                <div>
-                  <Divider />
-                  <PhotoStats
-                    photosTotalMonth={shuttoutData.photosTotalMonth}
-                    photosTotalDay={shuttoutData.photosTotalDay}
-                    photosPremiumMonth={shuttoutData.photosPremiumMonth}
-                    photosPremiumDay={shuttoutData.photosPremiumDay}
-                    unmountOnHide
-                  />
-                </div>
-              </Transition>
-            </div>
+            <PhotoPanel
+              lastUploadedData={shuttoutData.photoLastUploaded}
+              ofTheDayData={shuttoutData.photoOfTheDay}
+              biggestPrizeData={shuttoutData.photoBiggestPrize}
+              visible={this.state.photoPanel}
+              unmountOnHide
+            />
+            <Transition visible={this.state.photoStats} animation="fade down" duration={500}>
+              <div>
+                <Divider />
+                <PhotoStats
+                  photosTotalMonth={shuttoutData.photosTotalMonth}
+                  photosTotalDay={shuttoutData.photosTotalDay}
+                  photosPremiumMonth={shuttoutData.photosPremiumMonth}
+                  photosPremiumDay={shuttoutData.photosPremiumDay}
+                  unmountOnHide
+                />
+              </div>
+            </Transition>
             <PhotoChart
               photosTotalMonth={shuttoutData.photosTotalMonth}
               photosTotalDay={shuttoutData.photosTotalDay}
@@ -128,21 +124,19 @@ class DisplayPanel extends Component {
               visible={this.state.photoChart}
               unmountOnHide
             />
-            <div>
-              <Transition visible={this.state.totalVotes} animation="fade down" duration={500}>
-                <div>
-                  <Divider />
-                  <BarChart
-                    customTitle={'Total Votes'}
-                    data={shuttoutData.votesTotal}
-                    legendPosition="bottom"
-                    displayLegend={false}
-                    displayTitle
-                    unmountOnHide
-                  />
-                </div>
-              </Transition>
-            </div>
+            <Transition visible={this.state.totalVotes} animation="fade down" duration={500}>
+              <div>
+                <Divider />
+                <BarChart
+                  customTitle={'Total Votes'}
+                  data={shuttoutData.votesTotal}
+                  legendPosition="bottom"
+                  displayLegend={false}
+                  displayTitle
+                  unmountOnHide
+                />
+              </div>
+            </Transition>
           </Segment>
           <Segment>
             <Header as="h2" icon textAlign="center">
@@ -157,24 +151,20 @@ class DisplayPanel extends Component {
               </Transition>
             </div>
           </Segment>
-          <div>
-            <Transition visible={this.state.goldChart} animation="fade up" duration={500}>
-              <div>
-                <MixedChart dataOne={shuttoutData.goldTotal} dataTwo={shuttoutData.goldPayedOut} unmountOnHide />
-              </div>
-            </Transition>
-          </div>
-          <div>
-            <Transition visible={this.state.additionalStats} animation="fade left" duration={500}>
-              <div>
-                <AdditionalStats
-                  exitRate={parseFloat(data.exitRate).toFixed(2)}
-                  bounceRate={parseFloat(data.bounceRate).toFixed(2)}
-                  unmountOnHide
-                />
-              </div>
-            </Transition>
-          </div>
+          <Transition visible={this.state.goldChart} animation="fade up" duration={500}>
+            <div>
+              <MixedChart dataOne={shuttoutData.goldTotal} dataTwo={shuttoutData.goldPayedOut} unmountOnHide />
+            </div>
+          </Transition>
+          <Transition visible={this.state.additionalStats} animation="fade left" duration={500}>
+            <div>
+              <AdditionalStats
+                exitRate={parseFloat(data.exitRate).toFixed(2)}
+                bounceRate={parseFloat(data.bounceRate).toFixed(2)}
+                unmountOnHide
+              />
+            </div>
+          </Transition>
         </Container>
       </div>
     )

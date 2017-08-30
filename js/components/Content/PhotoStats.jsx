@@ -2,6 +2,7 @@
 
 import React from 'react'
 import { Statistic, Icon, Label, Segment, Grid } from 'semantic-ui-react'
+import CompareNumbers from '../../utils/compare_numbers'
 
 const PhotoStats = (props: {
   photosTotalMonth: ChartjsData,
@@ -9,30 +10,27 @@ const PhotoStats = (props: {
   photosPremiumMonth: ChartjsData,
   photosPremiumDay: ChartjsData
 }) => {
-  const photosTotalMonthCurrent = parseInt(props.photosTotalMonth.datasets[0].data[11], 10)
-  const photosTotalMonthPrevious = parseInt(props.photosTotalMonth.datasets[0].data[10], 10)
-  const photosTotalDayCurrent = parseInt(props.photosTotalDay.datasets[0].data[6], 10)
-  const photosTotalDayPrevious = parseInt(props.photosTotalDay.datasets[0].data[5], 10)
+  const { photosTotalMonth, photosTotalDay, photosPremiumMonth, photosPremiumDay } = props
 
-  const photosPremiumMonthCurrent = parseInt(props.photosPremiumMonth.datasets[0].data[11], 10)
-  const photosPremiumMonthPrevious = parseInt(props.photosPremiumMonth.datasets[0].data[10], 10)
-  const photosPremiumDayCurrent = parseInt(props.photosPremiumDay.datasets[0].data[6], 10)
-  const photosPremiumDayPrevious = parseInt(props.photosPremiumDay.datasets[0].data[5], 10)
-
+  const photosTotalMonthCurrent = parseInt(photosTotalMonth.datasets[0].data[11], 10)
+  const photosTotalMonthPrevious = parseInt(photosTotalMonth.datasets[0].data[10], 10)
   const doesPhotosTotalGrowMonthly = photosTotalMonthCurrent > photosTotalMonthPrevious
+  const photosTotalGrowMonthlyPercent = CompareNumbers(photosTotalMonthCurrent, photosTotalMonthPrevious)
+
+  const photosTotalDayCurrent = parseInt(photosTotalDay.datasets[0].data[6], 10)
+  const photosTotalDayPrevious = parseInt(photosTotalDay.datasets[0].data[5], 10)
   const doesPhotosTotalGrowDaily = photosTotalDayCurrent > photosTotalDayPrevious
+  const photosTotalGrowDailyPercent = CompareNumbers(photosTotalDayCurrent, photosTotalDayPrevious)
+
+  const photosPremiumMonthCurrent = parseInt(photosPremiumMonth.datasets[0].data[11], 10)
+  const photosPremiumMonthPrevious = parseInt(photosPremiumMonth.datasets[0].data[10], 10)
   const doesPhotosPremiumGrowMonthly = photosPremiumMonthCurrent > photosPremiumMonthPrevious
+  const photosPremiumGrowMonthlyPercent = CompareNumbers(photosPremiumMonthCurrent, photosPremiumMonthPrevious)
+
+  const photosPremiumDayCurrent = parseInt(photosPremiumDay.datasets[0].data[6], 10)
+  const photosPremiumDayPrevious = parseInt(photosPremiumDay.datasets[0].data[5], 10)
   const doesPhotosPremiumGrowDaily = photosPremiumDayCurrent > photosPremiumDayPrevious
-
-  const photosTotalGrowMonthlyPercent =
-    Math.round((1 - photosTotalMonthPrevious / photosTotalMonthCurrent + 0.00001) * 1000) / 10
-  const photosTotalGrowDailyPercent =
-    Math.round((1 - photosTotalDayPrevious / photosTotalDayCurrent + 0.00001) * 1000) / 10
-
-  const photosPremiumGrowMonthlyPercent =
-    Math.round((1 - photosPremiumMonthPrevious / photosPremiumMonthCurrent + 0.00001) * 1000) / 10
-  const photosPremiumGrowDailyPercent =
-    Math.round((1 - photosPremiumDayPrevious / photosPremiumDayCurrent + 0.00001) * 1000) / 10
+  const photosPremiumGrowDailyPercent = CompareNumbers(photosPremiumDayCurrent, photosPremiumDayPrevious)
 
   return (
     <Grid stackable>

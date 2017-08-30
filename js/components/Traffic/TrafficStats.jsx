@@ -2,6 +2,7 @@
 
 import React from 'react'
 import { Statistic, Icon, Label, Segment, Grid } from 'semantic-ui-react'
+import CompareNumbers from '../../utils/compare_numbers'
 
 const TrafficStats = (props: {
   visitorsMonth: number,
@@ -18,26 +19,36 @@ const TrafficStats = (props: {
   registrationsDayPrevious: number,
   registeredTotalUsers: number
 }) => {
-  const doesVisitorsGrowMonthly = props.visitorsMonth > props.visitorsMonthPrevious
-  const doesVisitorsGrowDaily = props.visitorsDay > props.visitorsDayPrevious
-  const doesActiveUsersGrowMonthly = props.activeUsersMonth > props.activeUsersMonthPrevious
-  const doesActiveUsersGrowDaily = props.activeUsersDay > props.activeUsersDayPrevious
-  const doesRegistrationsGrowMonthly = props.registrationsMonth > props.registrationsMonthPrevious
-  const doesRegistrationsGrowDaily = props.registrationsDay > props.registrationsDayPrevious
+  const {
+    visitorsMonth,
+    visitorsMonthPrevious,
+    visitorsDay,
+    visitorsDayPrevious,
+    activeUsersMonth,
+    activeUsersMonthPrevious,
+    activeUsersDay,
+    activeUsersDayPrevious,
+    registrationsMonth,
+    registrationsMonthPrevious,
+    registrationsDay,
+    registrationsDayPrevious,
+    registeredTotalUsers
+  } = props
 
-  const visitorsGrowMonthlyPercent =
-    Math.round((1 - props.visitorsMonthPrevious / props.visitorsMonth + 0.00001) * 1000) / 10
-  const visitorsGrowDailyPercent = Math.round((1 - props.visitorsDayPrevious / props.visitorsDay + 0.00001) * 1000) / 10
+  const doesVisitorsGrowMonthly = visitorsMonth > visitorsMonthPrevious
+  const doesVisitorsGrowDaily = visitorsDay > visitorsDayPrevious
+  const visitorsGrowMonthlyPercent = CompareNumbers(visitorsMonth, visitorsMonthPrevious)
+  const visitorsGrowDailyPercent = CompareNumbers(visitorsDay, visitorsDayPrevious)
 
-  const activeUsersGrowMonthlyPercent =
-    Math.round((1 - props.activeUsersMonthPrevious / props.activeUsersMonth + 0.00001) * 1000) / 10
-  const activeUsersGrowDailyPercent =
-    Math.round((1 - props.activeUsersDayPrevious / props.activeUsersDay + 0.00001) * 1000) / 10
+  const doesActiveUsersGrowMonthly = activeUsersMonth > activeUsersMonthPrevious
+  const doesActiveUsersGrowDaily = activeUsersDay > activeUsersDayPrevious
+  const activeUsersGrowMonthlyPercent = CompareNumbers(activeUsersMonth, activeUsersMonthPrevious)
+  const activeUsersGrowDailyPercent = CompareNumbers(activeUsersDay, activeUsersDayPrevious)
 
-  const registrationsGrowMonthlyPercent =
-    Math.round((1 - props.registrationsMonthPrevious / props.registrationsMonth + 0.00001) * 1000) / 10
-  const registrationsGrowDailyPercent =
-    Math.round((1 - props.registrationsDayPrevious / props.registrationsDay + 0.00001) * 1000) / 10
+  const doesRegistrationsGrowMonthly = registrationsMonth > registrationsMonthPrevious
+  const doesRegistrationsGrowDaily = registrationsDay > registrationsDayPrevious
+  const registrationsGrowMonthlyPercent = CompareNumbers(registrationsMonth, registrationsMonthPrevious)
+  const registrationsGrowDailyPercent = CompareNumbers(registrationsDay, registrationsDayPrevious)
 
   return (
     <Grid stackable divided="vertically">
@@ -49,7 +60,7 @@ const TrafficStats = (props: {
               {`${visitorsGrowMonthlyPercent}%`}
             </Label>
             <Statistic size="tiny">
-              <Statistic.Value>{props.visitorsMonth}</Statistic.Value>
+              <Statistic.Value>{visitorsMonth}</Statistic.Value>
               <Statistic.Label>Monthly Visitors</Statistic.Label>
             </Statistic>
           </Segment>
@@ -60,7 +71,7 @@ const TrafficStats = (props: {
               <Icon name={doesVisitorsGrowDaily ? 'arrow up' : 'arrow down'} /> {`${visitorsGrowDailyPercent}%`}
             </Label>
             <Statistic size="tiny">
-              <Statistic.Value>{props.visitorsDay}</Statistic.Value>
+              <Statistic.Value>{visitorsDay}</Statistic.Value>
               <Statistic.Label>Daily Visitors</Statistic.Label>
             </Statistic>
           </Segment>
@@ -72,7 +83,7 @@ const TrafficStats = (props: {
               {`${activeUsersGrowMonthlyPercent}%`}
             </Label>
             <Statistic size="tiny">
-              <Statistic.Value>{props.activeUsersMonth}</Statistic.Value>
+              <Statistic.Value>{activeUsersMonth}</Statistic.Value>
               <Statistic.Label>Monthly Active Users</Statistic.Label>
             </Statistic>
           </Segment>
@@ -83,7 +94,7 @@ const TrafficStats = (props: {
               <Icon name={doesActiveUsersGrowDaily ? 'arrow up' : 'arrow down'} /> {`${activeUsersGrowDailyPercent}%`}
             </Label>
             <Statistic size="tiny">
-              <Statistic.Value>{props.activeUsersDay}</Statistic.Value>
+              <Statistic.Value>{activeUsersDay}</Statistic.Value>
               <Statistic.Label>Daily Active Users</Statistic.Label>
             </Statistic>
           </Segment>
@@ -97,7 +108,7 @@ const TrafficStats = (props: {
               {`${registrationsGrowMonthlyPercent}%`}
             </Label>
             <Statistic size="tiny">
-              <Statistic.Value>{props.registrationsMonth}</Statistic.Value>
+              <Statistic.Value>{registrationsMonth}</Statistic.Value>
               <Statistic.Label>Monthly Registrations</Statistic.Label>
             </Statistic>
           </Segment>
@@ -109,7 +120,7 @@ const TrafficStats = (props: {
               {`${registrationsGrowDailyPercent}%`}
             </Label>
             <Statistic size="tiny">
-              <Statistic.Value>{props.registrationsDay}</Statistic.Value>
+              <Statistic.Value>{registrationsDay}</Statistic.Value>
               <Statistic.Label>Daily Registrations</Statistic.Label>
             </Statistic>
           </Segment>
@@ -117,7 +128,7 @@ const TrafficStats = (props: {
         <Grid.Column>
           <Segment textAlign="center">
             <Statistic size="tiny">
-              <Statistic.Value>{props.registeredTotalUsers}</Statistic.Value>
+              <Statistic.Value>{registeredTotalUsers}</Statistic.Value>
               <Statistic.Label>Registrations Total</Statistic.Label>
             </Statistic>
           </Segment>
